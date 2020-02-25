@@ -21,7 +21,7 @@ class MoestuinKalender extends Component {
   }
   // state = { kalenderData: [] };
   componentDidUpdate(prevProps) {
-    if (this.props.groenten != prevProps.groenten) {
+    if (this.props.groenten !== prevProps.groenten) {
       // let kalenderData = this.formatData();
       // // console.log("componentDidMount " + kalenderData);
       // // this.setState({ kalenderData });
