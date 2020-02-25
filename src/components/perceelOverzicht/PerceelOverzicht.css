@@ -1,0 +1,28 @@
+.perceelItem {
+  min-height: 100px;
+}
+
+.perceelItem:hover {
+  background-color: lightgrey;
+}
+
+/* .newItem {
+  color: white;
+  display: none;
+  width: 100%;
+  padding: 10vw;
+  position: absolute;
+  top: 0;
+  background-color: rgba(146, 151, 140, 0.87);
+  display: hidden;
+}
+
+.showForm {
+  display: inline;
+} */
+
+.grondlayout {
+  display: grid;
+  grid-template-columns: repeat(2, 50%); /* zonder middengang */
+  /* grid-template-columns: auto 50px auto; */ /* met midddengang */
+}
