@@ -15,7 +15,7 @@ class MoestuinKalender extends Component {
 
   componentDidMount() {
     let kalenderData = this.formatData();
-    console.log("componentDidMount " + kalenderData);
+    // console.log("componentDidMount " + kalenderData);
     // this.setState({ kalenderData });
     this.props.setKalenderData(kalenderData);
   }
@@ -52,6 +52,10 @@ class MoestuinKalender extends Component {
     // calenderAPI.next();
   };
 
+  clicked = info => {
+    console.log("Event: " + info.event.title);
+  };
+
   render() {
     // const kalenderData = [];
     const kalenderData = this.props.kalenderData;
@@ -73,6 +77,7 @@ class MoestuinKalender extends Component {
           plugins={[list, bootstrapPlugin, dayGridPlugin]}
           // themeSystem="bootstrap"
           events={kalenderData}
+          eventClick={this.clicked}
         ></FullCalendar>
       </div>
     );
