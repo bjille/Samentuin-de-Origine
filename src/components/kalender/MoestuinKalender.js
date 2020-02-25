@@ -35,13 +35,31 @@ class MoestuinKalender extends Component {
   };
 
   formatData = () => {
-    let kalenderData = this.props.groenten.map(groente => {
+    let kalenderData = [];
+    let perceelInfo = this.props.groenten.map(groente => {
+      let color;
+      groente.naam === "aardappel" ? (color = "red") : (color = "green");
       return {
         title: groente.naam,
-        start: this.formatDate(groente.actieDatum)
+        start: this.formatDate(groente.actieDatum),
+        color: color
         // end: this.formatDate(groente.oogsten)
       };
     });
+    let zaaikalenderData = this.props.zaaikalender.map(kalenderItem => {
+      return {
+        title: kalenderItem.naam + " / " + kalenderItem.type,
+        start: moment()
+          .day("Monday")
+          .week(kalenderItem.zaaien_van)
+          .format("YYYY-MM-DD"),
+        end: moment()
+          .day("Sunday")
+          .week(kalenderItem.zaaien_tot)
+          .format("YYYY-MM-DD")
+      };
+    });
+    kalenderData = [...perceelInfo, ...zaaikalenderData];
     return kalenderData;
   };
 
@@ -71,6 +89,11 @@ class MoestuinKalender extends Component {
         </button>
         <button onClick={() => this.changeView("listWeek")}>Lijst</button>
         <FullCalendar
+          // header={{
+          //   left: "title",
+          //   center: "listWeek,dayGridMonth,dayGridWeek",
+          //   right: "today prev,next"
+          // }}
           ref={this.calendarRef}
           defaultView="dayGridMonth"
           View="list"
@@ -87,6 +110,7 @@ class MoestuinKalender extends Component {
 const mapStateToProps = state => {
   return {
     groenten: state.perceelinfo.groenten,
+    zaaikalender: state.zaaikalender,
     kalenderData: state.kalender
   };
 };
