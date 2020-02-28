@@ -1,2 +1,41 @@
 @import "~@fullcalendar/core/main.css";
 @import "~@fullcalendar/daygrid/main.css";
+
+.calendarContainer {
+  /* maxWidth: 800, width: "100%", height: "auto"  */
+  flex: 1;
+}
+/* .calendarControls > .form-group {
+  display: inline-block;
+  width: 30%;
+} */
+.viewButtons {
+  margin-top: 1em;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+@media only screen and (min-width: 768px) {
+  .fullcalendarContainer {
+    display: flex;
+  }
+  .calendarContainer {
+    /* maxWidth: 800, width: "100%", height: "auto"  */
+    /* max-width: 800px; */
+    width: 60%;
+    flex: 1 1 auto;
+  }
+  .viewButtons {
+    display: block;
+  }
+  .calendarControls {
+    flex: 1;
+  }
+  .form-group {
+    /* display: block; */
+    flex-direction: column;
+    justify-content: center;
+    /* width: 100%; */
+  }
+}

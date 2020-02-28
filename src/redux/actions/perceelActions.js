@@ -1,11 +1,23 @@
 import axios from "axios";
 import clone from "lodash/clone";
+import { getZaaikalenderinfo } from "./zaaikalenderActions";
+import { setkalenderData } from "./kalenderActions";
 
-export const getPerceelinfo = () => async dispatch => {
-  const res = await axios.get(
-    `https://vanloocke.synology.me:1880/samentuin-groenten-get`
-  );
-  dispatch({ type: "GET_PERCEELINFO", payload: res.data });
+// export const getPerceelinfo = () => async dispatch => {
+//   const res = await axios.get(
+//     `https://vanloocke.synology.me:1880/samentuin-groenten-get`
+//   );
+//   dispatch({ type: "GET_PERCEELINFO", payload: res.data });
+// };
+
+export const getPerceelinfo = () => dispatch => {
+  axios
+    .get(`https://vanloocke.synology.me:1880/samentuin-groenten-get`)
+    .then(res => {
+      dispatch({ type: "GET_PERCEELINFO", payload: res.data });
+      dispatch(getZaaikalenderinfo());
+      // dispatch(setkalenderData());
+    });
 };
 
 export const delete_groente_overview = groente => async dispatch => {

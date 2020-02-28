@@ -9,6 +9,7 @@ import Kalender from "./pages/Kalender";
 import { connect } from "react-redux";
 import { getPerceelinfo } from "./redux/actions/perceelActions";
 import { setkalenderData } from "./redux/actions/kalenderActions";
+import moment from "moment";
 
 class App extends Component {
   componentDidMount() {
@@ -20,16 +21,34 @@ class App extends Component {
   }
 
   formatData = () => {
-    if (this.props.groenten) {
-      let kalenderData = this.props.groenten.map(groente => {
-        return {
-          title: groente.naam,
-          start: this.formatDate(groente.actieDatum)
-          // end: this.formatDate(groente.oogsten)
-        };
-      });
-      return kalenderData;
-    }
+    let kalenderData = [];
+    let perceelInfo = this.props.groenten.map(groente => {
+      let color;
+      groente.naam === "aardappel" ? (color = "red") : (color = "green");
+      return {
+        title: groente.naam,
+        start: this.formatDate(groente.actieDatum),
+        color: color
+        // end: this.formatDate(groente.oogsten)
+      };
+    });
+    let zaaikalenderData = this.props.zaaikalender.map(kalenderItem => {
+      return {
+        title: kalenderItem.naam + " (" + kalenderItem.type + ") " + "zaaien",
+        start: moment()
+          .day("Monday")
+          .week(kalenderItem.zaaien_van)
+          .format("YYYY-MM-DD"),
+        end: moment()
+          .day("Sunday")
+          .week(kalenderItem.zaaien_tot)
+          .format("YYYY-MM-DD"),
+        color: "lightgrey",
+        textColor: "black"
+      };
+    });
+    kalenderData = [...perceelInfo, ...zaaikalenderData];
+    return kalenderData;
   };
 
   render() {
@@ -48,9 +67,18 @@ class App extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    groenten: state.perceelinfo.groenten,
+    zaaikalender: state.zaaikalender,
+    kalenderData: state.kalender
+  };
+};
+
 const mapDispatchToProps = dispatch => ({
   getPerceelinfo: () => dispatch(getPerceelinfo()),
   setKalenderData: data => dispatch(setkalenderData(data))
 });
 
-export default connect(undefined, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

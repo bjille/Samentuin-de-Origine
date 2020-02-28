@@ -105,7 +105,7 @@ class GroenteModal extends Component {
                     onDayChange={this.handleDayChange}
                     placeholder={`${formatDate(new Date(), "l", "nl")}`}
                     dayPickerProps={{
-                      locale: "nl",
+                      locale: "be",
                       localeUtils: MomentLocaleUtils
                     }}
                     required
