@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { getPerceelinfo } from "./redux/actions/perceelActions";
 import { setkalenderData } from "./redux/actions/kalenderActions";
 import moment from "moment";
+import "./app.css";
 
 class App extends Component {
   componentDidMount() {
@@ -54,7 +55,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className="container-fluid">
+        <div className="">
           <NavBar />
           <Switch>
             <Route path="/groentenbeheer" component={GroentenBeheer} />

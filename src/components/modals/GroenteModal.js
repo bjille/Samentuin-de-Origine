@@ -13,27 +13,12 @@ import { connect } from "react-redux";
 import { add_Groente_Overview } from "../../redux/actions/perceelActions";
 
 class GroenteModal extends Component {
-  state = { show: false, selectedDay: undefined };
+  state = { selectedDay: undefined };
 
-  addbutton = () => {
-    return (
-      <button
-        type="button"
-        style={{ width: "100%" }}
-        className="btn btn-success"
-        // data-toggle="modal"
-        // data-target="#exampleModal"
-        onClick={this.toggleShow}
-      >
-        groente zaaien of planten
-      </button>
-    );
-  };
-
-  toggleShow = () => {
-    // console.log("show");
-    this.setState({ show: !this.state.show });
-  };
+  // toggleShowAddGroente = () => {
+  //   // console.log("show");
+  //   this.setState({ showAddGroente: !this.state.showAddGroente });
+  // };
 
   handleDayChange = day => {
     this.setState({ selectedDay: day });
@@ -41,7 +26,7 @@ class GroenteModal extends Component {
   };
 
   handleForm = event => {
-    this.toggleShow();
+    this.props.toggleShowAddGroente();
     event.preventDefault();
     const form = event.currentTarget;
     // const result = {
@@ -53,9 +38,10 @@ class GroenteModal extends Component {
     const result = {
       naam: form.elements[0].value,
       perceelNummer: this.props.selectedPerceel,
-      actieDatum: form.elements[1].value,
+      actieDate: form.elements[1].value,
       serre: form.elements[2].checked,
-      opmerking: form.elements[3].value
+      opmerking: form.elements[3].value,
+      type: "groenteAction"
     };
     console.log(result);
     this.props.addGroente_overview(result);
@@ -66,10 +52,23 @@ class GroenteModal extends Component {
     const { selectedPerceel } = this.props;
     return (
       <div>
-        {this.props.selectedPerceel ? this.addbutton() : ""}
-        <Modal show={this.state.show} onHide={this.toggleShow} animation={true}>
+        {/* <div className="buttonContainer container-fluid">
+          <div className="row justify-content-end">
+            {this.props.selectedPerceel ? "" : this.addManualActionButton()}
+            {this.props.selectedPerceel
+              ? this.addManualPerceelActionButton()
+              : ""}
+            {this.props.selectedPerceel ? this.addGroenteButton() : ""}
+          </div>
+        </div> */}
+        <Modal
+          // show={this.state.showAddGroente}
+          show={this.props.showAddGroente}
+          onHide={this.props.toggleShowAddGroente}
+          animation={true}
+        >
           <Modal.Header closeButton>
-            <Modal.Title>Geef gegevens op:</Modal.Title>
+            <Modal.Title>Groente toevoegen aan perceel:</Modal.Title>
           </Modal.Header>
 
           <form onSubmit={this.handleForm}>
@@ -137,7 +136,10 @@ class GroenteModal extends Component {
               </div>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={this.toggleShow}>
+              <Button
+                variant="secondary"
+                onClick={this.props.toggleShowAddGroente}
+              >
                 Close
               </Button>
               <Button type="submit" variant="primary">

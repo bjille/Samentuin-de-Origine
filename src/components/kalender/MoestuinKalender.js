@@ -44,6 +44,15 @@ class MoestuinKalender extends Component {
     return newDate.format("YYYY-MM-DD");
   };
 
+  getcolor = type => {
+    if (type === "manualAction") {
+      return "blue";
+    }
+    if (type === "groenteAction") {
+      return "green";
+    }
+  };
+
   formatData = () => {
     let kalenderData = [];
 
@@ -52,8 +61,9 @@ class MoestuinKalender extends Component {
       groente.naam === "aardappel" ? (color = "red") : (color = "green");
       return {
         title: groente.naam,
-        start: this.formatDate(groente.actieDatum),
-        color: color,
+        start: this.formatDate(groente.actieStartDate),
+        end: this.formatDate(groente.actieEndDate),
+        color: this.getcolor(groente.type),
         // end: this.formatDate(groente.oogsten)
         source: "perceelinfo",
         groupId: 0

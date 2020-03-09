@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import $ from "jquery";
+import TodoList from "../TodoList";
 
 class PerceelItem extends Component {
   constructor(props) {
@@ -9,10 +11,16 @@ class PerceelItem extends Component {
     // let perceelGroente = this.props.perceelGroente;
   }
 
+  handleClick = e => {
+    this.props.setActivePerceel(e.currentTarget.id);
+    // $(".collapse").collapse("toggle");
+  };
+
   render() {
     return (
       <div
-        onClick={e => this.props.setActivePerceel(e.currentTarget.id)}
+        // onClick={e => this.props.setActivePerceel(e.currentTarget.id)}
+        onClick={this.handleClick}
         className="perceelItem border"
         id={this.props.perceel.id}
       >

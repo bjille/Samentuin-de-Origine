@@ -2,6 +2,31 @@
   display: flex;
   justify-content: space-between;
 }
-.flex > a {
-  color: green;
+.flex > div > a {
+  color: white;
+  margin-left: 1em;
+}
+.button-left {
+  margin-right: 1em;
+}
+.button-right {
+  margin-left: 1em;
+}
+
+/* .buttonContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.buttonContainer > button {
+  width: 45%;
+} */
+
+@media (max-width: 576px) {
+  .button-left {
+    margin-right: 0;
+    margin-bottom: 1em;
+  }
+  .button-right {
+    margin-left: 0;
+  }
 }
