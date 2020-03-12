@@ -2,13 +2,27 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 class ActieButtons extends Component {
+  handleAddGroente = e => {
+    let action = {};
+    action.type = "groente";
+    this.props.toggleShowGroenteModal(e, action);
+  };
+  handleAddAction = e => {
+    let action = {};
+    action.type = "action";
+    this.props.toggleShowActionModal(e, action);
+  };
+
   addGroenteButton = () => {
+    let action = {};
+    action.type = "groente";
     return (
       <button
         type="button"
         className="btn btn-success col-sm button-right"
         title="Groente toevoegen aan perceel"
-        onClick={this.props.toggleShowAddGroente}
+        // onClick={(e, action) => this.props.toggleShowGroenteModal(e, action)}
+        onClick={e => this.handleAddGroente(e)}
       >
         groente zaaien of planten
       </button>
@@ -16,12 +30,15 @@ class ActieButtons extends Component {
   };
 
   addManualActionButton = () => {
+    let action = {};
+    action.type = "action";
     return (
       <button
         type="button"
         className="btn btn-primary col-sm "
         title="Actie toevoegen aan perceel"
-        onClick={this.props.toggleAddManualAction}
+        // onClick={(e, action) => this.props.toggleShowActionModal(e, action)}
+        onClick={e => this.handleAddAction(e)}
       >
         Actie toevoegen
       </button>
@@ -34,7 +51,8 @@ class ActieButtons extends Component {
         type="button"
         className="btn btn-primary col-sm button-left"
         title="Actie toevoegen aan perceel"
-        onClick={this.props.toggleAddManualAction}
+        // onClick={this.props.toggleShowActionModal}
+        onClick={e => this.handleAddAction(e)}
       >
         Actie toevoegen
       </button>

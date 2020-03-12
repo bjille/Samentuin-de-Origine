@@ -11,6 +11,8 @@ class TodoList extends Component {
   }
 }
 
-const mapStateToProps = state => {};
+const mapStateToProps = state => {
+  return { groenten: state.groenten };
+};
 
 export default connect(mapStateToProps)(TodoList);

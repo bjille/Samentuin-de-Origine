@@ -1,93 +1,113 @@
 import React, { Component } from "react";
 import { Button, Modal } from "react-bootstrap";
 import DayPickerInput from "react-day-picker/DayPickerInput";
+import "react-day-picker/lib/style.css";
+import "moment/locale/nl-be";
 import MomentLocaleUtils, {
   formatDate,
   parseDate
 } from "react-day-picker/moment";
+
+import "moment/locale/be";
 import { connect } from "react-redux";
-import { add_Action_Overview } from "../../redux/actions/perceelActions";
+import {
+  add_Action_Overview,
+  edit_Action_Overview
+} from "../../redux/actions/perceelActions";
 
-class ManualActionModal extends Component {
-  state = {};
-
+class ActionModal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    if (this.props.actionType === "add") {
+      this.state = { selectedStartDay: new Date(), selectedEndDay: new Date() };
+    }
+    if (this.props.actionType === "edit") {
+      this.state = {
+        selectedStartDay: this.props.selectedAction.actieStartDate,
+        selectedEndDay: this.props.selectedAction.actieEndDate
+      };
+    }
+  }
   handleStartDayChange = day => {
     this.setState({ selectedStartDay: day });
-    // document.getElementById("daypicker").innerHTML = day;
   };
 
   handleEndDayChange = day => {
     this.setState({ selectedEndDay: day });
-    // document.getElementById("daypicker").innerHTML = day;
   };
 
   handleForm = event => {
-    this.props.toggleShowAddManualAction();
+    this.props.toggleShowActionModal();
     event.preventDefault();
     const form = event.currentTarget;
-    // const result = {
-    //   groente: form.children[0].children[0].children[1].value,
-    //   actieDatum:
-    //     form.children[0].children[1].children[1].children[0].children[0].value,
-    //   serre: form.children[0].children[2].children[0].checked
-    // };
     const result = {
+      _id: this.props.selectedAction._id,
       naam: form.elements[0].value,
       perceelNummer: this.props.selectedPerceel,
       actieStartDate: form.elements[1].value,
       actieEndDate: form.elements[2].value,
       opmerking: form.elements[3].value,
-      type: "manualAction"
+      type: "action",
+      linkedId: this.props.selectedAction && this.props.selectedAction._id
     };
-    console.log(form.elements);
-    console.log(result);
-    this.props.addAction_overview(result);
+    if (this.props.actionType === "edit") {
+      this.props.editAction_overview(result);
+    }
+    if (this.props.actionType === "add") {
+      this.props.addAction_overview(result);
+    }
   };
-
   render() {
-    const { selectedPerceel } = this.props;
+    const { selectedPerceel, selectedAction, actionType } = this.props;
     const { selectedStartDay, selectedEndDay } = this.state;
+
+    let modalTitle,
+      naam,
+      info = "";
+    if (selectedPerceel && selectedAction && !selectedAction._id) {
+      modalTitle = `Actie linken aan Perceel ${selectedPerceel}`;
+    }
+    if (selectedAction && selectedAction._id) {
+      modalTitle = `Actie linken aan ${selectedAction.naam}`;
+    }
+    if (!modalTitle && !selectedPerceel) {
+      modalTitle = "Actie toevoegen:";
+    }
+    if (actionType === "add") {
+    }
+    if (actionType === "edit") {
+      modalTitle = "Actie wijzigen";
+      naam = selectedAction.naam;
+      info = selectedAction.opmerking;
+    }
 
     return (
       <Modal
-        // show={this.state.showAddGroente}
-        show={this.props.showAddManualAction}
-        onHide={this.props.toggleShowAddManualAction}
+        show={this.props.showActionModal}
+        onHide={this.props.toggleShowActionModal}
         animation={true}
       >
         <Modal.Header closeButton>
-          <Modal.Title>
-            {this.props.selectedPerceel
-              ? "Actie toevoegen aan Perceel:"
-              : "Actie toevoegen:"}
-          </Modal.Title>
+          <Modal.Title>{modalTitle}</Modal.Title>
         </Modal.Header>
 
         <form onSubmit={this.handleForm}>
           <Modal.Body>
             <div className="form-group">
               <label className="" htmlFor="Groente">
-                {this.props.selectedPerceel
-                  ? `Omschrijving actie aan perceel ${selectedPerceel}:`
-                  : "Actie toevoegen:"}
+                Korte omschrijving:
               </label>
               <input
                 type="text"
                 className="form-control"
                 id="Groente"
                 aria-describedby="groenteHelp"
+                defaultValue={naam}
                 required
-                // placeholder="Groente"
               />
-              {/* <small id="groenteHelp" className="form-text text-muted">
-			Geef de Groeten op die je gezaaid/geplant hebt{" "}
-		  </small> */}
             </div>{" "}
             <div className="form-group">
-              {/* {selectedDay && (
-			<label>Datum: {selectedDay.toLocaleDateString()}</label>
-		  )}
-		  {!selectedDay && <label>Kies een datum</label>} */}
               <label>Startdatum actie</label>
               <div className="form-group">
                 <DayPickerInput
@@ -96,9 +116,8 @@ class ManualActionModal extends Component {
                   parseDate={parseDate}
                   format="l"
                   onDayChange={this.handleStartDayChange}
-                  placeholder={`${formatDate(new Date(), "l", "nl")}`}
                   dayPickerProps={{
-                    locale: "be",
+                    locale: "nl-be",
                     localeUtils: MomentLocaleUtils
                   }}
                   required
@@ -106,10 +125,6 @@ class ManualActionModal extends Component {
               </div>
             </div>{" "}
             <div className="form-group">
-              {/* {selectedDay && (
-			<label>Datum: {selectedDay.toLocaleDateString()}</label>
-		  )}
-		  {!selectedDay && <label>Kies een datum</label>} */}
               <label>Einddatum actie</label>
               <div className="form-group">
                 <DayPickerInput
@@ -118,9 +133,8 @@ class ManualActionModal extends Component {
                   parseDate={parseDate}
                   format="l"
                   onDayChange={this.handleEndDayChange}
-                  placeholder={`${formatDate(new Date(), "l", "nl")}`}
                   dayPickerProps={{
-                    locale: "be",
+                    locale: "nl-be",
                     localeUtils: MomentLocaleUtils
                   }}
                   required
@@ -129,20 +143,21 @@ class ManualActionModal extends Component {
             </div>{" "}
             <div className="form-group">
               <label className="" htmlFor="opmerking">
-                opmerking:
+                Gedetailleerde omschrijving:
               </label>
               <textarea
                 name="opmerking"
                 id="opmerking"
                 className="form-control"
                 rows="3"
+                defaultValue={info}
               ></textarea>
             </div>
           </Modal.Body>
           <Modal.Footer>
             <Button
               variant="secondary"
-              onClick={this.props.toggleShowAddGroente}
+              onClick={this.props.toggleShowActionModal}
             >
               Close
             </Button>
@@ -161,10 +176,8 @@ const getStateFromProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  addAction_overview: groente => dispatch(add_Action_Overview(groente))
+  editAction_overview: action => dispatch(edit_Action_Overview(action)),
+  addAction_overview: action => dispatch(add_Action_Overview(action))
 });
 
-export default connect(
-  getStateFromProps,
-  mapDispatchToProps
-)(ManualActionModal);
+export default connect(getStateFromProps, mapDispatchToProps)(ActionModal);

@@ -33,7 +33,7 @@ class PerceelItem extends Component {
   }
 }
 
-const matDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     setActivePerceel: id =>
       dispatch({
@@ -43,4 +43,4 @@ const matDispatchToProps = dispatch => {
   };
 };
 
-export default connect(undefined, matDispatchToProps)(PerceelItem);
+export default connect(undefined, mapDispatchToProps)(PerceelItem);

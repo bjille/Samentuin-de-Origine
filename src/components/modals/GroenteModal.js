@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Modal } from "react-bootstrap";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
-
+import "moment/locale/nl-be";
 import MomentLocaleUtils, {
   formatDate,
   parseDate
@@ -10,90 +10,95 @@ import MomentLocaleUtils, {
 
 import "moment/locale/be";
 import { connect } from "react-redux";
-import { add_Groente_Overview } from "../../redux/actions/perceelActions";
+import {
+  add_Action_Overview,
+  edit_Action_Overview
+} from "../../redux/actions/perceelActions";
 
 class GroenteModal extends Component {
-  state = { selectedDay: undefined };
-
-  // toggleShowAddGroente = () => {
-  //   // console.log("show");
-  //   this.setState({ showAddGroente: !this.state.showAddGroente });
-  // };
+  constructor(props) {
+    super(props);
+    this.state = {};
+    if (this.props.actionType === "add") {
+      this.state = { selectedDay: new Date() };
+    }
+    if (this.props.actionType === "edit") {
+      this.state = { selectedDay: this.props.selectedAction.actieStartDate };
+    }
+  }
 
   handleDayChange = day => {
     this.setState({ selectedDay: day });
-    // document.getElementById("daypicker").innerHTML = day;
   };
 
   handleForm = event => {
-    this.props.toggleShowAddGroente();
+    this.props.toggleShowGroenteModal();
     event.preventDefault();
     const form = event.currentTarget;
-    // const result = {
-    //   groente: form.children[0].children[0].children[1].value,
-    //   actieDatum:
-    //     form.children[0].children[1].children[1].children[0].children[0].value,
-    //   serre: form.children[0].children[2].children[0].checked
-    // };
     const result = {
+      _id: this.props.selectedAction._id,
       naam: form.elements[0].value,
       perceelNummer: this.props.selectedPerceel,
-      actieDate: form.elements[1].value,
+      actieStartDate: form.elements[1].value,
       serre: form.elements[2].checked,
       opmerking: form.elements[3].value,
-      type: "groenteAction"
+      type: "groente"
     };
     console.log(result);
-    this.props.addGroente_overview(result);
+    if (this.props.actionType === "edit") {
+      this.props.editAction_overview(result);
+    }
+    if (this.props.actionType === "add") {
+      this.props.addAction_overview(result);
+    }
   };
 
   render() {
     const { selectedDay } = this.state;
-    const { selectedPerceel } = this.props;
+    const { selectedPerceel, actionType, selectedAction } = this.props;
+    console.log(selectedAction);
+    console.log(selectedDay);
+    let modalTitle,
+      naam,
+      info = "";
+    let serre = false;
+    if (selectedPerceel && actionType === "add") {
+      modalTitle = `Groente linken aan Perceel ${selectedPerceel}`;
+    }
+    if (selectedPerceel && actionType === "edit") {
+      modalTitle = `Groente Wijzigen`;
+      naam = selectedAction.naam;
+      info = selectedAction.opmerking;
+      serre = selectedAction.serre;
+    }
+
     return (
       <div>
-        {/* <div className="buttonContainer container-fluid">
-          <div className="row justify-content-end">
-            {this.props.selectedPerceel ? "" : this.addManualActionButton()}
-            {this.props.selectedPerceel
-              ? this.addManualPerceelActionButton()
-              : ""}
-            {this.props.selectedPerceel ? this.addGroenteButton() : ""}
-          </div>
-        </div> */}
         <Modal
-          // show={this.state.showAddGroente}
-          show={this.props.showAddGroente}
-          onHide={this.props.toggleShowAddGroente}
+          show={this.props.showGroenteModal}
+          onHide={this.props.toggleShowGroenteModal}
           animation={true}
         >
           <Modal.Header closeButton>
-            <Modal.Title>Groente toevoegen aan perceel:</Modal.Title>
+            <Modal.Title>{modalTitle}</Modal.Title>
           </Modal.Header>
 
           <form onSubmit={this.handleForm}>
             <Modal.Body>
               <div className="form-group">
                 <label className="" htmlFor="Groente">
-                  Groente planten op perceel {selectedPerceel}
+                  Naam groente:
                 </label>
                 <input
                   type="text"
                   className="form-control"
                   id="Groente"
                   aria-describedby="groenteHelp"
+                  defaultValue={naam}
                   required
-                  // placeholder="Groente"
                 />
-                {/* <small id="groenteHelp" className="form-text text-muted">
-                  Geef de Groeten op die je gezaaid/geplant hebt{" "}
-                </small> */}
               </div>{" "}
               <div className="form-group">
-                {/* {selectedDay && (
-                  <label>Datum: {selectedDay.toLocaleDateString()}</label>
-                )}
-                {!selectedDay && <label>Kies een datum</label>} */}
                 <label>Datum van actie</label>
                 <div className="form-group">
                   <DayPickerInput
@@ -102,9 +107,8 @@ class GroenteModal extends Component {
                     parseDate={parseDate}
                     format="l"
                     onDayChange={this.handleDayChange}
-                    placeholder={`${formatDate(new Date(), "l", "nl")}`}
                     dayPickerProps={{
-                      locale: "be",
+                      locale: "nl-be",
                       localeUtils: MomentLocaleUtils
                     }}
                     required
@@ -117,6 +121,7 @@ class GroenteModal extends Component {
                     type="checkbox"
                     className="custom-control-input"
                     id="switch1"
+                    defaultChecked={serre}
                   />
                   <label className="custom-control-label" htmlFor="switch1">
                     In de serre?
@@ -132,13 +137,14 @@ class GroenteModal extends Component {
                   id="opmerking"
                   className="form-control"
                   rows="3"
+                  defaultValue={info}
                 ></textarea>
               </div>
             </Modal.Body>
             <Modal.Footer>
               <Button
                 variant="secondary"
-                onClick={this.props.toggleShowAddGroente}
+                onClick={this.props.toggleShowGroenteModal}
               >
                 Close
               </Button>
@@ -158,7 +164,8 @@ const getStateFromProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  addGroente_overview: groente => dispatch(add_Groente_Overview(groente))
+  editAction_overview: action => dispatch(edit_Action_Overview(action)),
+  addAction_overview: action => dispatch(add_Action_Overview(action))
 });
 
 export default connect(getStateFromProps, mapDispatchToProps)(GroenteModal);

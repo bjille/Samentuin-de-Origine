@@ -20,25 +20,15 @@ export const getPerceelinfo = () => dispatch => {
     });
 };
 
-export const delete_groente_overview = groente => async dispatch => {
-  const { _id } = groente;
-  const newGroente = clone(groente);
+export const delete_action_overview = action => async dispatch => {
+  const { _id } = action;
+  const newGroente = clone(action);
   delete newGroente._id;
   const res = await axios.delete(
     "https://vanloocke.synology.me:1880/samentuin-action-delete",
     { data: newGroente }
   );
-  dispatch({ type: "DELETE_GROENTE_OVERZICHT", payload: _id });
-};
-
-export const add_Groente_Overview = groente => async dispatch => {
-  const res = await axios
-    .post("https://vanloocke.synology.me:1880/samentuin-action-post", groente)
-    .then(res => {
-      console.log(res.data);
-      groente._id = res.data.insertedIds[0];
-      dispatch({ type: "ADD_GROENTE_OVERVIEW", payload: groente });
-    });
+  dispatch({ type: "DELETE_ACTION_OVERZICHT", payload: _id });
 };
 
 export const add_Action_Overview = action => async dispatch => {
@@ -47,6 +37,15 @@ export const add_Action_Overview = action => async dispatch => {
     .then(res => {
       console.log(res.data);
       action._id = res.data.insertedIds[0];
-      dispatch({ type: "ADD_GROENTE_OVERVIEW", payload: action });
+      dispatch({ type: "ADD_ACTION_OVERVIEW", payload: action });
+    });
+};
+
+export const edit_Action_Overview = action => async dispatch => {
+  const res = await axios
+    .put("https://vanloocke.synology.me:1880/samentuin-action-put", action)
+    .then(res => {
+      console.log(res.data);
+      dispatch({ type: "EDIT_ACTION_OVERVIEW", payload: action });
     });
 };

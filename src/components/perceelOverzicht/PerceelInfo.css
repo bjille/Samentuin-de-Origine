@@ -12,6 +12,23 @@
 .button-right {
   margin-left: 1em;
 }
+.perceelInfoButtons {
+  display: flex;
+  /* padding: 5px; */
+}
+.perceelInfoButtons > a {
+  display: inline-block;
+  padding: 10px 10px 10px 0;
+}
+.card-header {
+  padding: 0 0.75rem;
+}
+.card-header:first-child {
+  border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+}
+.card-header > h5 {
+  padding: 10px 10px 10px 0;
+}
 
 /* .buttonContainer {
   display: flex;
