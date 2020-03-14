@@ -52,6 +52,7 @@ class ActionModal extends Component {
       actieEndDate: form.elements[2].value,
       opmerking: form.elements[3].value,
       type: "action",
+      childActions: this.props.selectedAction.childActions,
       linkedId:
         this.props.actionType === "add" && this.props.actionLevel === 1
           ? this.props.selectedAction._id
