@@ -61,8 +61,8 @@ class PerceelInfo extends Component {
             style={this.renderPerceelItemStyle(action)}
           >
             <h5>
-              {action.naam} {action.serre > 0 ? `(Serre)` : ""}
-              {action.childActions.length > 0
+              {action.naam} {action.serre > 0 ? ` (Serre)` : ""}{" "}
+              {action.childActions && action.childActions.length > 0
                 ? `(${action.childActions.length} ${
                     action.childActions.length > 1 ? "acties" : "actie"
                   })`
