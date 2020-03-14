@@ -2,10 +2,23 @@
   min-height: 100px;
 }
 
+.perceelTitle {
+  font-weight: bold;
+}
+
+.perceelItem {
+  padding: 0.5em;
+}
+.perceelItem > hr {
+  margin: 0.4em;
+}
 .perceelItem:hover {
   background-color: lightgrey;
 }
-
+.perceelBody {
+  font-size: 0.9em;
+  font-family: Arial, Helvetica, sans-serif;
+}
 /* .newItem {
   color: white;
   display: none;

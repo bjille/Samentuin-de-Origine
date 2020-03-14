@@ -23,7 +23,7 @@ const reformat = data => {
   });
   // console.log(rootActions);
 
-  let newData = data.map(rootAction => {
+  let newData = rootActions.map(rootAction => {
     let selectedChildActions = childActions.filter(
       childAction => childAction.linkedId === rootAction._id
     );
@@ -34,7 +34,7 @@ const reformat = data => {
     return rootAction;
   });
 
-  return rootActions;
+  return newData;
 };
 
 export const getPerceelinfo = () => dispatch => {

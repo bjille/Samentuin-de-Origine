@@ -21,17 +21,20 @@ class PerceelItem extends Component {
       <div
         // onClick={e => this.props.setActivePerceel(e.currentTarget.id)}
         onClick={this.handleClick}
-        className="perceelItem border"
+        className="perceelItem border border-success"
         id={this.props.perceel.id}
       >
-        {this.props.perceel.naam}
-        {this.props.perceelGroente.map((groente, index) => (
-          <div key={index}>{`${groente.naam} ${groente.serre ? "(S)" : ""}${
-            groente.childActions && groente.childActions.length > 0
-              ? `(${groente.childActions.length})`
-              : ""
-          }`}</div>
-        ))}
+        <div className="perceelTitle">{this.props.perceel.naam}</div>
+        <hr></hr>
+        <div className="perceelBody">
+          {this.props.perceelGroente.map((groente, index) => (
+            <div key={index}>{`${groente.naam} ${groente.serre ? "(S)" : ""}${
+              groente.childActions && groente.childActions.length > 0
+                ? `(${groente.childActions.length})`
+                : ""
+            }`}</div>
+          ))}
+        </div>
       </div>
     );
   }
