@@ -8,18 +8,18 @@ class PerceelOverzicht extends Component {
   state = {
     groenten: [],
     percelen: [
-      { naam: "Serre droog", id: 1 },
-      { naam: "Serre nat", id: 2 },
-      { naam: "Kolen", id: 3 },
-      { naam: "Braak", id: 4 },
-      { naam: "Blad", id: 5 },
-      { naam: "Peulen", id: 6 },
-      { naam: "Vrucht", id: 7 },
-      { naam: "Patatn", id: 8 },
-      { naam: "Aardbeien", id: 9 },
-      { naam: "Kleine vruchten", id: 10 },
-      { naam: "Worter-Bol-Knol", id: 11 },
-      { naam: "Kruiden", id: 12 }
+      { naam: "Kolen" },
+      { naam: "Braak" },
+      { naam: "Blad" },
+      { naam: "Peulen" },
+      { naam: "Vrucht" },
+      { naam: "Patatn" },
+      { naam: "Aardbeien" },
+      { naam: "Worter-Bol-Knol" },
+      { naam: "Serre droog" },
+      { naam: "Serre nat" },
+      { naam: "Kleine vruchten" },
+      { naam: "Kruiden" }
     ]
   };
   componentDidMount() {
