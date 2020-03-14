@@ -1,16 +1,16 @@
 import React, { Component } from "react";
-import { Card, Accordion, Button } from "react-bootstrap";
-import "./PerceelInfo.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit, faPlus } from "@fortawesome/free-solid-svg-icons";
-import PerceelChildInfo from "./PerceelChildInfo";
+import { Card, Accordion, Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import { delete_action_overview } from "../../redux/actions/perceelActions";
 
-class PerceelInfo extends Component {
-  handleAdd = (e, action, actionLevel) => {
+class PerceelChildInfo extends Component {
+  handleAddAction = (e, action) => {
     // let action = {};
     let newAction = { ...action };
     newAction.type = "action";
-    this.props.handleAdd(e, newAction, actionLevel);
+    this.props.handleAdd(e, newAction);
   };
 
   displayGroenteInfo = action => {
@@ -49,7 +49,7 @@ class PerceelInfo extends Component {
   };
 
   render() {
-    let action = this.props.groente;
+    let action = this.props.action;
     return (
       //   <h1 className="test">{this.props.groente.naam}</h1>
       <React.Fragment>
@@ -60,27 +60,22 @@ class PerceelInfo extends Component {
             className="card-header flex "
             style={this.renderPerceelItemStyle(action)}
           >
-            <h5>
-              {action.naam}{" "}
-              {action.childActions.length > 0
-                ? `(${action.childActions.length})`
-                : ""}
-            </h5>
+            <h5>{action.naam} </h5>
             {/* <a as={Button} viariant="link" eventkey={action._id}>
-              {action.naam}
-            </a> */}
+				  {action.naam}
+				</a> */}
             <div className="perceelInfoButtons">
-              <a
+              {/* <a
                 id={action._id}
-                onClick={e => this.handleAdd(e, action, 1)}
+                onClick={e => this.handleAddAction(e, action)}
                 href="#"
                 title="actie toevoegen aan groente"
               >
                 <FontAwesomeIcon icon={faPlus} />
-              </a>
+              </a> */}
               <a
                 id={action._id}
-                onClick={e => this.props.handleEdit(e, action, 0)}
+                onClick={e => this.props.handleEdit(e, action)}
                 href="#"
                 title="Info aanpassen"
               >
@@ -101,24 +96,6 @@ class PerceelInfo extends Component {
               {/* <h2 className="card-title"></h2> */}
               {action.type === "groente" && this.displayGroenteInfo(action)}
               {action.type === "action" && this.displayActionInfo(action)}
-              <Accordion
-              // defaultActiveKey={perceelInfo[0] && perceelInfo[0]._id}
-              >
-                {action.childActions &&
-                  action.childActions.length > 0 &&
-                  action.childActions.map(action => (
-                    <PerceelChildInfo
-                      handleEdit={(e, action) =>
-                        this.props.handleEdit(e, action, 1)
-                      }
-                      handleDelete={(e, action) =>
-                        this.props.handleDelete(e, action)
-                      }
-                      key={action._id}
-                      action={action}
-                    ></PerceelChildInfo>
-                  ))}
-              </Accordion>
             </Card.Body>
           </Accordion.Collapse>
         </Card>
@@ -126,5 +103,10 @@ class PerceelInfo extends Component {
     );
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    // handleDelete: id => dispatch(delete_action_overview(id))
+  };
+};
 
-export default PerceelInfo;
+export default connect(undefined, mapDispatchToProps)(PerceelChildInfo);

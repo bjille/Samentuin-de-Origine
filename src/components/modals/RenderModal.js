@@ -5,7 +5,7 @@ import ActionModal from "./ActionModal";
 export default class RenderModal extends Component {
   state = {};
   render() {
-    const { actionType, selectedAction } = this.props;
+    const { actionType, selectedAction, actionLevel } = this.props;
 
     if (selectedAction && selectedAction.type === "groente") {
       return (
@@ -14,6 +14,7 @@ export default class RenderModal extends Component {
           showGroenteModal={this.props.showGroenteModal}
           toggleShowGroenteModal={this.props.toggleShowGroenteModal}
           selectedAction={selectedAction}
+          actionLevel={actionLevel}
         ></GroenteModal>
       );
     }
@@ -24,6 +25,7 @@ export default class RenderModal extends Component {
           showActionModal={this.props.showActionModal}
           toggleShowActionModal={this.props.toggleShowActionModal}
           selectedAction={selectedAction}
+          actionLevel={actionLevel}
         ></ActionModal>
       );
     } else return <div></div>;

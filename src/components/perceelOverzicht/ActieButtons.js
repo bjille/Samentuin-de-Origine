@@ -5,12 +5,12 @@ class ActieButtons extends Component {
   handleAddGroente = e => {
     let action = {};
     action.type = "groente";
-    this.props.toggleShowGroenteModal(e, action);
+    this.props.toggleShowGroenteModal(e, action, 0);
   };
   handleAddAction = e => {
     let action = {};
     action.type = "action";
-    this.props.toggleShowActionModal(e, action);
+    this.props.toggleShowActionModal(e, action, 0);
   };
 
   addGroenteButton = () => {

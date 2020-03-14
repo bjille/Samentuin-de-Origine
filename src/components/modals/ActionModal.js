@@ -42,15 +42,23 @@ class ActionModal extends Component {
     event.preventDefault();
     const form = event.currentTarget;
     const result = {
-      _id: this.props.selectedAction._id,
+      _id:
+        this.props.actionType === "edit"
+          ? this.props.selectedAction._id
+          : undefined,
       naam: form.elements[0].value,
       perceelNummer: this.props.selectedPerceel,
       actieStartDate: form.elements[1].value,
       actieEndDate: form.elements[2].value,
       opmerking: form.elements[3].value,
       type: "action",
-      linkedId: this.props.selectedAction && this.props.selectedAction._id
+      linkedId:
+        this.props.actionType === "add" && this.props.actionLevel === 1
+          ? this.props.selectedAction._id
+          : this.props.selectedAction.linkedId &&
+            this.props.selectedAction.linkedId
     };
+
     if (this.props.actionType === "edit") {
       this.props.editAction_overview(result);
     }

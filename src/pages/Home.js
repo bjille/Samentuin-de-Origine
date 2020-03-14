@@ -3,8 +3,8 @@ import { Accordion } from "react-bootstrap";
 import PerceelOverzicht from "../components/perceelOverzicht/PerceelOverzicht";
 import PerceelInfo from "../components/perceelOverzicht/PerceelInfo";
 import { connect } from "react-redux";
-import GroenteModal from "../components/modals/GroenteModal";
-import ActionModal from "../components/modals/ActionModal";
+import { delete_action_overview } from "../redux/actions/perceelActions";
+
 import TodoList from "../components/TodoList";
 import ActieButtons from "../components/perceelOverzicht/ActieButtons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -13,29 +13,45 @@ import RenderModal from "../components/modals/RenderModal";
 class Home extends Component {
   state = {};
 
-  handleChangeAction = (e, action, actionType) => {
-    console.log(e);
+  handleChangeAction = (e, action, actionLevel, actionType) => {
+    // console.log(e);
     e.stopPropagation();
     console.log(action);
     if (action.type === "action") {
       this.setState({
         showActionModal: true,
         actionType: actionType,
-        selectedAction: action
+        selectedAction: action,
+        actionLevel: actionLevel
       });
     }
     if (action.type === "groente") {
       this.setState({
         showGroenteModal: true,
         actionType: actionType,
-        selectedAction: action
+        selectedAction: action,
+        actionLevel: actionLevel
       });
     }
   };
 
+  handleDelete = (e, action) => {
+    e.stopPropagation();
+    const linkedActionCount = action.childActions.length;
+    if (linkedActionCount > 0) {
+      if (
+        window.confirm(
+          `Deze actie heeft ${linkedActionCount} gelinke acties, ben je zeker dat je deze actie wil verwijderen?`
+        )
+      ) {
+        this.props.handleDelete(action);
+      }
+    } else this.props.handleDelete(action);
+  };
+
   render() {
     const { selectedPerceel, groenten } = this.props;
-    const { selectedAction, actionType } = this.state;
+    const { selectedAction, actionType, actionLevel } = this.state;
     const perceelInfo = groenten.filter(
       groente => groente.perceelNummer === selectedPerceel
     );
@@ -56,8 +72,8 @@ class Home extends Component {
               >
                 <div className="actieButtons">
                   <ActieButtons
-                    toggleShowGroenteModal={(e, action) =>
-                      this.handleChangeAction(e, action, "add")
+                    toggleShowGroenteModal={(e, action, actionLevel) =>
+                      this.handleChangeAction(e, action, actionLevel, "add")
                     }
                     // toggleShowGroenteModal={() =>
                     //   this.setState({
@@ -65,14 +81,15 @@ class Home extends Component {
                     //     actionType: "add"
                     //   })
                     // }
-                    toggleShowActionModal={(e, action) =>
-                      this.handleChangeAction(e, action, "add")
+                    toggleShowActionModal={(e, action, actionLevel) =>
+                      this.handleChangeAction(e, action, actionLevel, "add")
                     }
                   ></ActieButtons>
                 </div>
                 <div id="Modal">
                   <RenderModal
                     actionType={actionType}
+                    actionLevel={actionLevel}
                     selectedPerceel={selectedPerceel}
                     selectedAction={selectedAction}
                     showActionModal={this.state.showActionModal}
@@ -99,12 +116,13 @@ class Home extends Component {
               >
                 {perceelInfo.map((groente, index) => (
                   <PerceelInfo
-                    handleEdit={(e, action) =>
-                      this.handleChangeAction(e, action, "edit")
+                    handleEdit={(e, action, actionLevel) =>
+                      this.handleChangeAction(e, action, actionLevel, "edit")
                     }
-                    handleAdd={(e, action) =>
-                      this.handleChangeAction(e, action, "add")
+                    handleAdd={(e, action, actionLevel) =>
+                      this.handleChangeAction(e, action, actionLevel, "add")
                     }
+                    handleDelete={(e, action) => this.handleDelete(e, action)}
                     key={index}
                     groente={groente}
                   ></PerceelInfo>
@@ -125,5 +143,9 @@ const mapStateToProps = state => {
     groenten: state.perceelinfo.groenten
   };
 };
-
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = dispatch => {
+  return {
+    handleDelete: id => dispatch(delete_action_overview(id))
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
