@@ -27,13 +27,34 @@ class PerceelItem extends Component {
         <div className="perceelTitle">{this.props.perceel.naam}</div>
         <hr></hr>
         <div className="perceelBody">
-          {this.props.perceelGroente.map((groente, index) => (
-            <div key={index}>{`${groente.naam} ${groente.serre ? "(S)" : ""}${
-              groente.childActions && groente.childActions.length > 0
-                ? `(${groente.childActions.length})`
-                : ""
-            }`}</div>
-          ))}
+          {/* <div className="bodyTitle">groenten:</div>
+          {this.props.perceelGroente.map((action, index) => {
+            if (action.type === "groente") {
+              return (
+                <div key={index}>{`${action.naam} ${action.serre ? "(S)" : ""}${
+                  action.childActions && action.childActions.length > 0
+                    ? `(${action.childActions.length})`
+                    : ""
+                }`}</div>
+              );
+            }
+          })}
+          <hr></hr>
+          <div className="bodyTitle">acties:</div> */}
+          {this.props.perceelGroente.map((action, index) => {
+            return (
+              <div
+                className={
+                  action.type === "groente" ? "text-success" : "text-primary"
+                }
+                key={index}
+              >{`${action.naam} ${action.serre ? "(S)" : ""}${
+                action.childActions && action.childActions.length > 0
+                  ? `(${action.childActions.length})`
+                  : ""
+              }`}</div>
+            );
+          })}
         </div>
       </div>
     );

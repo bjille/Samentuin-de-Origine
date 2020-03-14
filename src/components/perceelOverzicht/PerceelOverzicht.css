@@ -19,6 +19,9 @@
   font-size: 0.9em;
   font-family: Arial, Helvetica, sans-serif;
 }
+.bodyTitle {
+  text-decoration: underline;
+}
 /* .newItem {
   color: white;
   display: none;

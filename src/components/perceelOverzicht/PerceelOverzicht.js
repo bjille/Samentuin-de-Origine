@@ -8,14 +8,18 @@ class PerceelOverzicht extends Component {
   state = {
     groenten: [],
     percelen: [
-      { naam: "perceel1", naam: "Kolen", id: 1 },
-      { naam: "perceel2", naam: "Braak", id: 2 },
-      { naam: "perceel3", naam: "Blad", id: 3 },
-      { naam: "perceel4", naam: "Peulen", id: 4 },
-      { naam: "perceel5", naam: "Vrucht", id: 5 },
-      { naam: "perceel6", naam: "Patatn", id: 6 },
-      { naam: "perceel7", naam: "Aardbeien", id: 7 },
-      { naam: "perceel8", naam: "Worter-Bol-Knol", id: 8 }
+      { naam: "perceel1", naam: "Serre droog", id: 1 },
+      { naam: "perceel1", naam: "Serre nat", id: 2 },
+      { naam: "perceel1", naam: "Kolen", id: 3 },
+      { naam: "perceel2", naam: "Braak", id: 4 },
+      { naam: "perceel3", naam: "Blad", id: 5 },
+      { naam: "perceel4", naam: "Peulen", id: 6 },
+      { naam: "perceel5", naam: "Vrucht", id: 7 },
+      { naam: "perceel6", naam: "Patatn", id: 8 },
+      { naam: "perceel7", naam: "Aardbeien", id: 9 },
+      { naam: "perceel8", naam: "Worter-Bol-Knol", id: 10 },
+      { naam: "perceel8", naam: "Kleine vruchten", id: 11 },
+      { naam: "perceel8", naam: "Kruiden", id: 12 }
     ]
   };
   componentDidMount() {
@@ -57,7 +61,7 @@ class PerceelOverzicht extends Component {
             // console.log(perceel.naam);
             let perceelGroente = [];
             groenten.map(groente => {
-              if (groente.perceelNummer === (index + 1).toString()) {
+              if (groente.perceelNummer === (index - 1).toString()) {
                 perceelGroente.push(groente);
               }
               return groente;
