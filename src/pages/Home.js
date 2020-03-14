@@ -41,7 +41,9 @@ class Home extends Component {
     if (linkedActionCount > 0) {
       if (
         window.confirm(
-          `Deze actie heeft ${linkedActionCount} gelinke acties, ben je zeker dat je deze actie wil verwijderen?`
+          `Deze ${action.type} heeft ${linkedActionCount} gelinke ${
+            linkedActionCount > 1 ? "acties" : "actie"
+          }, ben je zeker dat je deze ${action.type} wil verwijderen?`
         )
       ) {
         this.props.handleDelete(action);

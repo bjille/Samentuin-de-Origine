@@ -85,7 +85,7 @@ class PerceelChildInfo extends Component {
                 id={action._id}
                 onClick={e => this.props.handleDelete(e, action)}
                 href="#"
-                title="Groente verwijderen"
+                title="Actie verwijderen"
               >
                 <FontAwesomeIcon icon={faTrash} />
               </a>

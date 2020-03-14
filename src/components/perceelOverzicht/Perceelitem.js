@@ -26,7 +26,11 @@ class PerceelItem extends Component {
       >
         {this.props.perceel.naam}
         {this.props.perceelGroente.map((groente, index) => (
-          <div key={index}>{groente.naam}</div>
+          <div key={index}>{`${groente.naam} ${groente.serre ? "(S)" : ""}${
+            groente.childActions.length > 0
+              ? `(${groente.childActions.length})`
+              : ""
+          }`}</div>
         ))}
       </div>
     );
