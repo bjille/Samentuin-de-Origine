@@ -61,7 +61,7 @@ class PerceelOverzicht extends Component {
             // console.log(perceel.naam);
             let perceelGroente = [];
             groenten.map(groente => {
-              if (groente.perceelNummer === (index + 1).toString()) {
+              if (groente.perceelNummer === perceel.naam) {
                 perceelGroente.push(groente);
               }
               return groente;
@@ -73,7 +73,7 @@ class PerceelOverzicht extends Component {
               <PerceelItem
                 key={index}
                 perceel={perceel}
-                perceelNummer={index + 1}
+                perceelNummer={perceelGroente.perceelNummer}
                 perceelGroente={perceelGroente}
               ></PerceelItem>
             );
@@ -85,7 +85,8 @@ class PerceelOverzicht extends Component {
 }
 
 const mapStateToProps = state => ({
-  groenten: state.perceelinfo.groenten
+  groenten: state.perceelinfo.groenten,
+  selectedPerceel: state.perceelinfo.selectedPerceel
 });
 
 const mapDispatchToProps = dispatch => ({

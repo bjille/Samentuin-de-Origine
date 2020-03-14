@@ -12,7 +12,8 @@ class PerceelItem extends Component {
   }
 
   handleClick = e => {
-    this.props.setActivePerceel(e.currentTarget.id);
+    console.log(e.currentTarget);
+    this.props.setActivePerceel(e.currentTarget.getAttribute("naam"));
     // $(".collapse").collapse("toggle");
   };
 
@@ -23,6 +24,7 @@ class PerceelItem extends Component {
         onClick={this.handleClick}
         className="perceelItem border border-success"
         id={this.props.perceel.id}
+        naam={this.props.perceel.naam}
       >
         <div className="perceelTitle">{this.props.perceel.naam}</div>
         <hr></hr>
