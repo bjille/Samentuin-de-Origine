@@ -42,7 +42,8 @@ class GroenteModal extends Component {
       actieStartDate: form.elements[1].value,
       serre: form.elements[2].checked,
       opmerking: form.elements[3].value,
-      type: "groente"
+      type: "groente",
+      childActions: this.props.selectedAction.childActions
     };
     console.log(result);
     if (this.props.actionType === "edit") {
