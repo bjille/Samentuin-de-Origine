@@ -47,8 +47,11 @@ class PerceelOverzicht extends Component {
     const { groenten } = this.props;
     const { percelen } = this.state;
     return (
-      <div className="col-md-5 border">
-        <div className="container grondlayout p-2">
+      <div className="col-lg-5 border">
+        <div
+          className="container-fluid grondlayout p-2"
+          style={{ backgroundColor: `rgba(166, 111, 81, 0.1)` }}
+        >
           {/* {this.drawGrondlayout()} */}
           {percelen.map((perceel, index) => {
             // console.log(perceel.naam);

@@ -67,7 +67,7 @@ class Home extends Component {
           <div className="row">
             <PerceelOverzicht></PerceelOverzicht>
             {/* uitleg per perceel START*/}
-            <div id="perceelInfo" className="col-md-7 border">
+            <div id="perceelInfo" className="col-lg-7 border">
               <div
                 className="
               mt-2 mb-0"
