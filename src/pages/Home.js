@@ -3,7 +3,10 @@ import { Accordion } from "react-bootstrap";
 import PerceelOverzicht from "../components/perceelOverzicht/PerceelOverzicht";
 import PerceelInfo from "../components/perceelOverzicht/PerceelInfo";
 import { connect } from "react-redux";
-import { delete_action_overview } from "../redux/actions/perceelActions";
+import {
+  delete_action_overview,
+  setActivePerceel
+} from "../redux/actions/perceelActions";
 
 import TodoList from "../components/TodoList";
 import ActieButtons from "../components/perceelOverzicht/ActieButtons";
@@ -12,6 +15,13 @@ import RenderModal from "../components/modals/RenderModal";
 
 class Home extends Component {
   state = {};
+
+  componentDidUpdate = () => {
+    // console.log(this.props.match.params.activePerceel);
+    if (this.props.match.params.activePerceel === "0") {
+      this.props.resetActivePerceel();
+    }
+  };
 
   handleChangeAction = (e, action, actionLevel, actionType) => {
     // console.log(e);
@@ -147,7 +157,11 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    handleDelete: id => dispatch(delete_action_overview(id))
+    handleDelete: id => dispatch(delete_action_overview(id)),
+    resetActivePerceel: () =>
+      dispatch({
+        type: "RESET_SELECTED_PERCEEL"
+      })
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

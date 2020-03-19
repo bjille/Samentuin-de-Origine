@@ -37,6 +37,13 @@ const reformat = data => {
   return newData;
 };
 
+export const setActivePerceel = id => dispatch => {
+  dispatch({
+    type: "SET_SELECTED_PERCEEL",
+    payload: id
+  });
+};
+
 export const getPerceelinfo = () => dispatch => {
   axios
     .get(`https://vanloocke.synology.me:1880/samentuin-action-get`)

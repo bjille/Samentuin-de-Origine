@@ -15,7 +15,7 @@ class PerceelOverzicht extends Component {
       { naam: "Vrucht" },
       { naam: "Patatn" },
       { naam: "Aardbeien" },
-      { naam: "Worter-Bol-Knol" },
+      { naam: "Wortel-Bol-Knol" },
       { naam: "Serre droog" },
       { naam: "Serre nat" },
       { naam: "Kleine vruchten" },

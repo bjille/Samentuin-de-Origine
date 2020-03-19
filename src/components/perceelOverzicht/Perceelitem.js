@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import $ from "jquery";
 import TodoList from "../TodoList";
+import { setActivePerceel } from "../../redux/actions/perceelActions";
 
 class PerceelItem extends Component {
   constructor(props) {
@@ -65,11 +66,11 @@ class PerceelItem extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setActivePerceel: id =>
-      dispatch({
-        type: "SET_SELECTED_PERCEEL",
-        payload: id
-      })
+    setActivePerceel: id => dispatch(setActivePerceel(id))
+    // dispatch({
+    //   type: "SET_SELECTED_PERCEEL",
+    //   payload: id
+    // })
   };
 };
 

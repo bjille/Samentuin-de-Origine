@@ -5,13 +5,18 @@ import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.svg";
+import { connect } from "react-redux";
+import { setActivePerceel } from "../redux/actions/perceelActions";
+import "./Navbar.css";
 
-export default class NavBar extends Component {
+class NavBar extends Component {
   render() {
     return (
       <Navbar sticky="top" bg="light" expand="sm">
         <Navbar.Brand>
-          Samentuin de Origine
+          <span onClick={this.props.resetActivePerceel}>
+            Samentuin de Origine
+          </span>
           {/* <img src={logo} style={{ width: 100 }} alt="" /> */}
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -19,7 +24,12 @@ export default class NavBar extends Component {
           <Nav className="ml-auto">
             {/* <Nav.Link href="#home">Home</Nav.Link> */}
             <Link to="/">
-              <span className="navbar-brand mb-0 h1">Home</span>
+              <span
+                onClick={this.props.resetActivePerceel}
+                className="navbar-brand mb-0 h1"
+              >
+                Home
+              </span>
             </Link>{" "}
             <Link to="/groentenbeheer">
               <span className="navbar-brand mb-0 h1">Groenten</span>
@@ -51,3 +61,15 @@ export default class NavBar extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setActivePerceel: id => dispatch(setActivePerceel(id)),
+    resetActivePerceel: () =>
+      dispatch({
+        type: "RESET_SELECTED_PERCEEL"
+      })
+  };
+};
+
+export default connect(undefined, mapDispatchToProps)(NavBar);

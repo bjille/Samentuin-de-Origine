@@ -5,9 +5,11 @@ function perceelReducer(state = initialstate, action) {
   let newState = [];
   switch (action.type) {
     case "GET_PERCEELINFO":
-      return { groenten: payload };
+      return { groenten: payload, selectedPerceel: state.selectedPerceel };
     case "SET_SELECTED_PERCEEL":
       return { ...state, selectedPerceel: payload };
+    case "RESET_SELECTED_PERCEEL":
+      return { groenten: state.groenten };
     case "DELETE_ACTION_OVERZICHT":
       if (payload.linkedId) {
         newState = state.groenten.filter(groente => {

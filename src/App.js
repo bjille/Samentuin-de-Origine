@@ -61,6 +61,7 @@ class App extends Component {
             <Route path="/groentenbeheer" component={GroentenBeheer} />
             <Route path="/info" component={Info} />
             <Route path="/kalender" component={Kalender} />
+            <Route path="/setPerceel/:activePerceel" component={Home} />
             <Route path="/" component={Home} />
           </Switch>
         </div>
