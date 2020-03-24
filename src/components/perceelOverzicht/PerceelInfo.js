@@ -2,8 +2,14 @@ import React, { Component } from "react";
 import { Card, Accordion, Button } from "react-bootstrap";
 import "./PerceelInfo.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faEdit, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrash,
+  faEdit,
+  faPlus,
+  faShower
+} from "@fortawesome/free-solid-svg-icons";
 import PerceelChildInfo from "./PerceelChildInfo";
+import WaterSlider from "./WaterSlider";
 
 class PerceelInfo extends Component {
   handleAdd = (e, action, actionLevel) => {
@@ -49,7 +55,7 @@ class PerceelInfo extends Component {
   };
 
   render() {
-    let action = this.props.groente;
+    let action = this.props.action;
     return (
       //   <h1 className="test">{this.props.groente.naam}</h1>
       <React.Fragment>
@@ -72,6 +78,21 @@ class PerceelInfo extends Component {
               {action.naam}
             </a> */}
             <div className="perceelInfoButtons">
+              {action.type === "groente" ? (
+                <WaterSlider action={action}></WaterSlider>
+              ) : (
+                undefined
+              )}
+              {/* <div className="form-group">
+                <div className="custom-control custom-switch">
+                  
+                  <WaterSlider action={action}></WaterSlider>
+                  <label className="custom-control-label" htmlFor={action._id}>
+                    Water geven
+                  </label>
+                </div>
+              </div> */}
+
               <a
                 id={action._id}
                 onClick={e => this.handleAdd(e, action, 1)}

@@ -59,22 +59,22 @@ class PerceelOverzicht extends Component {
           {/* {this.drawGrondlayout()} */}
           {percelen.map((perceel, index) => {
             // console.log(perceel.naam);
-            let perceelGroente = [];
+            let perceelAction = [];
             groenten.map(groente => {
               if (groente.perceelNummer === perceel.naam) {
-                perceelGroente.push(groente);
+                perceelAction.push(groente);
               }
               return groente;
               // groente.perceelNummer === (index + 1).toString()
-              //   ? perceelGroente.push(groente)
+              //   ? perceelAction.push(groente)
               //   : "";
             });
             return (
               <PerceelItem
                 key={index}
                 perceel={perceel}
-                perceelNummer={perceelGroente.perceelNummer}
-                perceelGroente={perceelGroente}
+                perceelNummer={perceelAction.perceelNummer}
+                perceelAction={perceelAction}
               ></PerceelItem>
             );
           })}

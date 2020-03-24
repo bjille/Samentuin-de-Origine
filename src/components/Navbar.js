@@ -17,6 +17,7 @@ class NavBar extends Component {
           <span onClick={this.props.resetActivePerceel}>
             Samentuin de Origine
           </span>
+
           {/* <img src={logo} style={{ width: 100 }} alt="" /> */}
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

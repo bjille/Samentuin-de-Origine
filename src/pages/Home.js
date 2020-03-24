@@ -126,7 +126,7 @@ class Home extends Component {
               <Accordion
                 defaultActiveKey={perceelInfo[0] && perceelInfo[0]._id}
               >
-                {perceelInfo.map((groente, index) => (
+                {perceelInfo.map((action, index) => (
                   <PerceelInfo
                     handleEdit={(e, action, actionLevel) =>
                       this.handleChangeAction(e, action, actionLevel, "edit")
@@ -136,7 +136,7 @@ class Home extends Component {
                     }
                     handleDelete={(e, action) => this.handleDelete(e, action)}
                     key={index}
-                    groente={groente}
+                    action={action}
                   ></PerceelInfo>
                 ))}
               </Accordion>

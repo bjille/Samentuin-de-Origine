@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
 }
-.flex > div > a {
+.flex > div > * {
   color: white;
   margin-left: 1em;
 }
@@ -16,7 +16,10 @@
   display: flex;
   /* padding: 5px; */
 }
-.perceelInfoButtons > a {
+.form-group {
+  margin: 0;
+}
+.perceelInfoButtons > * {
   display: inline-block;
   padding: 10px 10px 10px 0;
 }
