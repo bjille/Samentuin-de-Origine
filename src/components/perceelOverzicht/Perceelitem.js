@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import $ from "jquery";
-import TodoList from "../TodoList";
 import { setActivePerceel } from "../../redux/actions/perceelActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShower } from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +11,7 @@ class PerceelItem extends Component {
     this.state = {};
   }
 
-  handleClick = e => {
+  handleClick = (e) => {
     console.log(e.currentTarget);
     this.props.setActivePerceel(e.currentTarget.getAttribute("naam"));
     // $(".collapse").collapse("toggle");
@@ -28,10 +26,24 @@ class PerceelItem extends Component {
         id={this.props.perceel.id}
         naam={this.props.perceel.naam}
       >
-        <div className="perceelTitle">{this.props.perceel.naam}</div>
+        <div className="container perceelTitle">
+          <div className="row">
+            <div className="col perceelTitle-left">
+              {this.props.perceel.naam}
+            </div>
+            <div className="col justify-content-between perceelTitle-right">
+              <FontAwesomeIcon
+                // className="fa-blink"
+                icon={faShower}
+              ></FontAwesomeIcon>
+              <span>O</span>
+              <span>W</span>
+            </div>
+          </div>
+        </div>
         <hr></hr>
         <div className="perceelBody">
-          {this.props.perceelAction.map((action, index) => {
+          {/* {this.props.perceelAction.map((action, index) => {
             return (
               <div
                 className={
@@ -54,16 +66,16 @@ class PerceelItem extends Component {
                 )}
               </div>
             );
-          })}
+          })} */}
         </div>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    setActivePerceel: id => dispatch(setActivePerceel(id))
+    setActivePerceel: (id) => dispatch(setActivePerceel(id)),
     // dispatch({
     //   type: "SET_SELECTED_PERCEEL",
     //   payload: id

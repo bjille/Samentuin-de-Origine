@@ -72,7 +72,30 @@ class Home extends Component {
     return (
       <div>
         <TodoList></TodoList>
-
+        <div id="Modal">
+          <RenderModal
+            actionType={actionType}
+            actionLevel={actionLevel}
+            selectedPerceel={selectedPerceel}
+            selectedAction={selectedAction}
+            showActionModal={this.state.showActionModal}
+            toggleShowActionModal={() =>
+              this.setState({
+                showActionModal: false,
+                selectedAction: undefined,
+                actionType: undefined
+              })
+            }
+            showGroenteModal={this.state.showGroenteModal}
+            toggleShowGroenteModal={() =>
+              this.setState({
+                showGroenteModal: false,
+                selectedAction: undefined,
+                actionType: undefined
+              })
+            }
+          ></RenderModal>
+        </div>
         <div className="container-fluid">
           <div className="row">
             <PerceelOverzicht></PerceelOverzicht>
@@ -97,30 +120,6 @@ class Home extends Component {
                       this.handleChangeAction(e, action, actionLevel, "add")
                     }
                   ></ActieButtons>
-                </div>
-                <div id="Modal">
-                  <RenderModal
-                    actionType={actionType}
-                    actionLevel={actionLevel}
-                    selectedPerceel={selectedPerceel}
-                    selectedAction={selectedAction}
-                    showActionModal={this.state.showActionModal}
-                    toggleShowActionModal={() =>
-                      this.setState({
-                        showActionModal: false,
-                        selectedAction: undefined,
-                        actionType: undefined
-                      })
-                    }
-                    showGroenteModal={this.state.showGroenteModal}
-                    toggleShowGroenteModal={() =>
-                      this.setState({
-                        showGroenteModal: false,
-                        selectedAction: undefined,
-                        actionType: undefined
-                      })
-                    }
-                  ></RenderModal>
                 </div>
               </div>
               <Accordion
