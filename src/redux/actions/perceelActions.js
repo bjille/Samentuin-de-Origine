@@ -10,22 +10,22 @@ import { setkalenderData } from "./kalenderActions";
 //   dispatch({ type: "GET_PERCEELINFO", payload: res.data });
 // };
 
-const reformat = data => {
+const reformat = (data) => {
   console.log(data);
   // acties uitfilteren die een linkedId hebben
-  let childActions = data.filter(action => {
+  let childActions = data.filter((action) => {
     return action.linkedId ? action : "";
   });
   // let linkedIDs = childActions.map(action => action.linkedId);
 
-  let rootActions = data.filter(action => {
+  let rootActions = data.filter((action) => {
     return !action.linkedId ? action : "";
   });
   // console.log(rootActions);
 
-  let newData = rootActions.map(rootAction => {
+  let newData = rootActions.map((rootAction) => {
     let selectedChildActions = childActions.filter(
-      childAction => childAction.linkedId === rootAction._id
+      (childAction) => childAction.linkedId === rootAction._id
     );
     rootAction.childActions = selectedChildActions;
     if (selectedChildActions.length > 0) {
@@ -37,17 +37,17 @@ const reformat = data => {
   return newData;
 };
 
-export const setActivePerceel = id => dispatch => {
+export const setActivePerceel = (id) => (dispatch) => {
   dispatch({
     type: "SET_SELECTED_PERCEEL",
-    payload: id
+    payload: id,
   });
 };
 
-export const getPerceelinfo = () => dispatch => {
+export const getPerceelinfo = () => (dispatch) => {
   axios
-    .get(`https://vanloocke.synology.me:1880/samentuin-action-get`)
-    .then(res => {
+    .get(`https://samentuin-backend.herokuapp.com/api/acties`)
+    .then((res) => {
       const formattedData = reformat(res.data);
       dispatch({ type: "GET_PERCEELINFO", payload: formattedData });
       dispatch(getZaaikalenderinfo());
@@ -55,7 +55,7 @@ export const getPerceelinfo = () => dispatch => {
     });
 };
 
-export const delete_action_overview = action => async dispatch => {
+export const delete_action_overview = (action) => async (dispatch) => {
   const { _id } = action;
   const newGroente = clone(action);
   delete newGroente._id;
@@ -67,10 +67,10 @@ export const delete_action_overview = action => async dispatch => {
   dispatch({ type: "DELETE_ACTION_OVERZICHT", payload: action });
 };
 
-export const add_Action_Overview = action => async dispatch => {
+export const add_Action_Overview = (action) => async (dispatch) => {
   const res = await axios
     .post("https://vanloocke.synology.me:1880/samentuin-action-post", action)
-    .then(res => {
+    .then((res) => {
       console.log(res.data);
       action._id = res.data.insertedIds[0];
       action.childActions = [];
@@ -78,10 +78,10 @@ export const add_Action_Overview = action => async dispatch => {
     });
 };
 
-export const edit_Action_Overview = action => async dispatch => {
+export const edit_Action_Overview = (action) => async (dispatch) => {
   const res = await axios
     .put("https://vanloocke.synology.me:1880/samentuin-action-put", action)
-    .then(res => {
+    .then((res) => {
       console.log(res.data);
       dispatch({ type: "EDIT_ACTION_OVERVIEW", payload: action });
     });
