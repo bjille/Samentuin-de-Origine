@@ -2,7 +2,7 @@ import axios from "axios";
 import clone from "lodash/clone";
 import { getZaaikalenderinfo } from "./zaaikalenderActions";
 import { setkalenderData } from "./kalenderActions";
-
+const backendURI = require("../../config/keys").BACKEND_URI;
 // export const getPerceelinfo = () => async dispatch => {
 //   const res = await axios.get(
 //     `https://vanloocke.synology.me:1880/samentuin-groenten-get`
@@ -46,7 +46,8 @@ export const setActivePerceel = (id) => (dispatch) => {
 
 export const getPerceelinfo = () => (dispatch) => {
   axios
-    .get(`https://samentuin-backend.herokuapp.com/api/acties`)
+    // .get(`https://samentuin-backend.herokuapp.com/api/acties`)
+    .get(`${backendURI}/api/acties`)
     .then((res) => {
       const formattedData = reformat(res.data);
       dispatch({ type: "GET_PERCEELINFO", payload: formattedData });
@@ -60,19 +61,19 @@ export const delete_action_overview = (action) => async (dispatch) => {
   const newGroente = clone(action);
   delete newGroente._id;
   delete newGroente.childActions;
-  const res = await axios.delete(
-    "https://vanloocke.synology.me:1880/samentuin-action-delete",
-    { data: newGroente }
-  );
+  const res = await axios.delete(`${backendURI}/api/acties`, {
+    data: newGroente,
+  });
   dispatch({ type: "DELETE_ACTION_OVERZICHT", payload: action });
 };
 
 export const add_Action_Overview = (action) => async (dispatch) => {
+  console.log(action);
   const res = await axios
-    .post("https://vanloocke.synology.me:1880/samentuin-action-post", action)
+    .post(`${backendURI}/api/acties`, action)
     .then((res) => {
       console.log(res.data);
-      action._id = res.data.insertedIds[0];
+      action._id = res.data._id;
       action.childActions = [];
       dispatch({ type: "ADD_ACTION_OVERVIEW", payload: action });
     });
@@ -80,7 +81,7 @@ export const add_Action_Overview = (action) => async (dispatch) => {
 
 export const edit_Action_Overview = (action) => async (dispatch) => {
   const res = await axios
-    .put("https://vanloocke.synology.me:1880/samentuin-action-put", action)
+    .put(`${backendURI}/api/acties`, action)
     .then((res) => {
       console.log(res.data);
       dispatch({ type: "EDIT_ACTION_OVERVIEW", payload: action });
