@@ -19,8 +19,8 @@ class PerceelOverzicht extends Component {
       { naam: "Serre droog" },
       { naam: "Serre nat" },
       { naam: "Kleine vruchten" },
-      { naam: "Kruiden" }
-    ]
+      { naam: "Kruiden" },
+    ],
   };
   componentDidMount() {
     // this.props.getPerceelinfo();
@@ -37,7 +37,7 @@ class PerceelOverzicht extends Component {
     return grondlayout;
   };
 
-  showPerceelInfo = perceel => {
+  showPerceelInfo = (perceel) => {
     // console.log(this.state.groenten);
     // let perceelInfo = [];
     // let perceelInfodiv = document.getElementById("perceelInfo");
@@ -60,7 +60,7 @@ class PerceelOverzicht extends Component {
           {percelen.map((perceel, index) => {
             // console.log(perceel.naam);
             let perceelAction = [];
-            groenten.map(groente => {
+            groenten.map((groente) => {
               if (groente.perceelNummer === perceel.naam) {
                 perceelAction.push(groente);
               }
@@ -84,13 +84,13 @@ class PerceelOverzicht extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   groenten: state.perceelinfo.groenten,
-  selectedPerceel: state.perceelinfo.selectedPerceel
+  selectedPerceel: state.perceelinfo.selectedPerceel,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getPerceelinfo: () => dispatch(getPerceelinfo())
+const mapDispatchToProps = (dispatch) => ({
+  getPerceelinfo: () => dispatch(getPerceelinfo()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PerceelOverzicht);

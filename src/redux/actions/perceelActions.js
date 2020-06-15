@@ -61,9 +61,7 @@ export const delete_action_overview = (action) => async (dispatch) => {
   const newGroente = clone(action);
   delete newGroente._id;
   delete newGroente.childActions;
-  const res = await axios.delete(`${backendURI}/api/acties`, {
-    data: newGroente,
-  });
+  const res = await axios.delete(`${backendURI}/api/acties/${_id}`);
   dispatch({ type: "DELETE_ACTION_OVERZICHT", payload: action });
 };
 
@@ -81,7 +79,7 @@ export const add_Action_Overview = (action) => async (dispatch) => {
 
 export const edit_Action_Overview = (action) => async (dispatch) => {
   const res = await axios
-    .put(`${backendURI}/api/acties`, action)
+    .post(`${backendURI}/api/acties`, action)
     .then((res) => {
       console.log(res.data);
       dispatch({ type: "EDIT_ACTION_OVERVIEW", payload: action });

@@ -5,7 +5,7 @@ import PerceelInfo from "../components/perceelOverzicht/PerceelInfo";
 import { connect } from "react-redux";
 import {
   delete_action_overview,
-  setActivePerceel
+  setActivePerceel,
 } from "../redux/actions/perceelActions";
 
 import TodoList from "../components/TodoList";
@@ -32,7 +32,7 @@ class Home extends Component {
         showActionModal: true,
         actionType: actionType,
         selectedAction: action,
-        actionLevel: actionLevel
+        actionLevel: actionLevel,
       });
     }
     if (action.type === "groente") {
@@ -40,7 +40,7 @@ class Home extends Component {
         showGroenteModal: true,
         actionType: actionType,
         selectedAction: action,
-        actionLevel: actionLevel
+        actionLevel: actionLevel,
       });
     }
   };
@@ -65,9 +65,9 @@ class Home extends Component {
     const { selectedPerceel, groenten } = this.props;
     const { selectedAction, actionType, actionLevel } = this.state;
     const perceelInfo = groenten.filter(
-      groente => groente.perceelNummer === selectedPerceel
+      (groente) => groente.perceelNummer === selectedPerceel
     );
-    console.log(perceelInfo);
+    // console.log(perceelInfo);
 
     return (
       <div>
@@ -83,7 +83,7 @@ class Home extends Component {
               this.setState({
                 showActionModal: false,
                 selectedAction: undefined,
-                actionType: undefined
+                actionType: undefined,
               })
             }
             showGroenteModal={this.state.showGroenteModal}
@@ -91,7 +91,7 @@ class Home extends Component {
               this.setState({
                 showGroenteModal: false,
                 selectedAction: undefined,
-                actionType: undefined
+                actionType: undefined,
               })
             }
           ></RenderModal>
@@ -148,19 +148,19 @@ class Home extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     selectedPerceel: state.perceelinfo.selectedPerceel,
-    groenten: state.perceelinfo.groenten
+    groenten: state.perceelinfo.groenten,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    handleDelete: id => dispatch(delete_action_overview(id)),
+    handleDelete: (id) => dispatch(delete_action_overview(id)),
     resetActivePerceel: () =>
       dispatch({
-        type: "RESET_SELECTED_PERCEEL"
-      })
+        type: "RESET_SELECTED_PERCEEL",
+      }),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

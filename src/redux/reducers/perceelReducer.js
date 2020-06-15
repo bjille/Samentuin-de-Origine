@@ -12,22 +12,22 @@ function perceelReducer(state = initialstate, action) {
       return { groenten: state.groenten };
     case "DELETE_ACTION_OVERZICHT":
       if (payload.linkedId) {
-        newState = state.groenten.filter(groente => {
+        newState = state.groenten.filter((groente) => {
           groente.childActions = groente.childActions.filter(
-            childGroente => childGroente._id !== payload._id
+            (childGroente) => childGroente._id !== payload._id
           );
           return groente;
         });
       } else {
         newState = state.groenten.filter(
-          groente => groente._id !== payload._id
+          (groente) => groente._id !== payload._id
         );
       }
 
       return { groenten: newState, selectedPerceel: state.selectedPerceel };
     case "ADD_ACTION_OVERVIEW":
       if (payload.linkedId) {
-        newState = state.groenten.map(groente => {
+        newState = state.groenten.map((groente) => {
           if (groente._id === payload.linkedId) {
             groente.childActions.push(payload);
             return groente;
@@ -39,13 +39,13 @@ function perceelReducer(state = initialstate, action) {
       return {
         // groenten: [...state.groenten, payload],
         groenten: newState,
-        selectedPerceel: state.selectedPerceel
+        selectedPerceel: state.selectedPerceel,
       };
     case "EDIT_ACTION_OVERVIEW":
-      console.log(payload);
+      // console.log(payload);
       if (!payload.linkedId) {
         //Als er geen linkedId is, maw: is GEEN childaction:
-        newState = state.groenten.map(groente => {
+        newState = state.groenten.map((groente) => {
           if (groente._id === payload._id) {
             groente = payload;
           }
@@ -53,10 +53,10 @@ function perceelReducer(state = initialstate, action) {
         });
       } else {
         //Als er een linkedid is, maw: is EEN childaction:
-        newState = state.groenten.map(groente => {
+        newState = state.groenten.map((groente) => {
           if (groente._id === payload.linkedId) {
             //als de groente ID van de mastergroente gelijk is aan de linkedID van de childaction
-            groente.childActions = groente.childActions.map(childAction => {
+            groente.childActions = groente.childActions.map((childAction) => {
               // Als de childaction ID gelijk is aan de payload ID (dan is het de geselecteerde childaction)
               if (childAction._id === payload._id) {
                 childAction = payload;
@@ -69,7 +69,7 @@ function perceelReducer(state = initialstate, action) {
       }
       return {
         groenten: [...newState],
-        selectedPerceel: state.selectedPerceel
+        selectedPerceel: state.selectedPerceel,
       };
     default:
       return state;
