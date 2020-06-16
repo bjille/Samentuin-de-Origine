@@ -51,7 +51,7 @@ class PerceelOverzicht extends Component {
     const { groenten } = this.props;
     const { percelen } = this.state;
     return (
-      <div className="col-lg-5 border">
+      <div className="col-md-5 border">
         <div
           className="container-fluid grondlayout p-2"
           style={{ backgroundColor: `rgba(166, 111, 81, 0.1)` }}

@@ -6,7 +6,7 @@ import {
   faTrash,
   faEdit,
   faPlus,
-  faShower
+  faShower,
 } from "@fortawesome/free-solid-svg-icons";
 import PerceelChildInfo from "./PerceelChildInfo";
 import WaterSlider from "./WaterSlider";
@@ -19,7 +19,7 @@ class PerceelInfo extends Component {
     this.props.handleAdd(e, newAction, actionLevel);
   };
 
-  displayGroenteInfo = action => {
+  displayGroenteInfo = (action) => {
     return (
       <div>
         <div className="tijdspanne">
@@ -31,7 +31,7 @@ class PerceelInfo extends Component {
       </div>
     );
   };
-  displayActionInfo = action => {
+  displayActionInfo = (action) => {
     return (
       <div>
         <div className="tijdspanne">
@@ -45,7 +45,7 @@ class PerceelInfo extends Component {
     );
   };
 
-  renderPerceelItemStyle = action => {
+  renderPerceelItemStyle = (action) => {
     if (action.type === "action") {
       return { backgroundColor: "rgba(0, 123, 255,0.8)", color: "white" };
     }
@@ -66,6 +66,7 @@ class PerceelInfo extends Component {
             className="card-header flex "
             style={this.renderPerceelItemStyle(action)}
           >
+            {/* naam van actie */}
             <h5>
               {action.naam} {action.serre > 0 ? ` (Serre)` : ""}{" "}
               {action.childActions && action.childActions.length > 0
@@ -80,9 +81,7 @@ class PerceelInfo extends Component {
             <div className="perceelInfoButtons">
               {action.type === "groente" ? (
                 <WaterSlider action={action}></WaterSlider>
-              ) : (
-                undefined
-              )}
+              ) : undefined}
               {/* <div className="form-group">
                 <div className="custom-control custom-switch">
                   
@@ -95,7 +94,7 @@ class PerceelInfo extends Component {
 
               <a
                 id={action._id}
-                onClick={e => this.handleAdd(e, action, 1)}
+                onClick={(e) => this.handleAdd(e, action, 1)}
                 href="#"
                 title="actie toevoegen aan groente"
               >
@@ -103,7 +102,7 @@ class PerceelInfo extends Component {
               </a>
               <a
                 id={action._id}
-                onClick={e => this.props.handleEdit(e, action, 0)}
+                onClick={(e) => this.props.handleEdit(e, action, 0)}
                 href="#"
                 title="Info aanpassen"
               >
@@ -111,7 +110,7 @@ class PerceelInfo extends Component {
               </a>
               <a
                 id={action._id}
-                onClick={e => this.props.handleDelete(e, action)}
+                onClick={(e) => this.props.handleDelete(e, action)}
                 href="#"
                 title="Groente verwijderen"
               >
@@ -129,7 +128,7 @@ class PerceelInfo extends Component {
               >
                 {action.childActions &&
                   action.childActions.length > 0 &&
-                  action.childActions.map(action => (
+                  action.childActions.map((action) => (
                     <PerceelChildInfo
                       handleEdit={(e, action) =>
                         this.props.handleEdit(e, action, 1)

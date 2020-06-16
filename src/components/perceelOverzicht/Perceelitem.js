@@ -17,27 +17,84 @@ class PerceelItem extends Component {
     // $(".collapse").collapse("toggle");
   };
 
+  itemcounter = (item) => {};
+
   render() {
+    const { perceel, perceelAction } = this.props;
     return (
       <div
         // onClick={e => this.props.setActivePerceel(e.currentTarget.id)}
         onClick={this.handleClick}
         className="perceelItem border border-success"
-        id={this.props.perceel.id}
-        naam={this.props.perceel.naam}
+        id={perceel.id}
+        naam={perceel.naam}
       >
-        <div className="container perceelTitle">
+        <div className="container">
           <div className="row">
-            <div className="col perceelTitle-left">
-              {this.props.perceel.naam}
+            <div className=" perceelTitle">
+              <div className="col">{perceel.naam}</div>
             </div>
-            <div className="col justify-content-between perceelTitle-right">
-              <FontAwesomeIcon
-                // className="fa-blink"
-                icon={faShower}
-              ></FontAwesomeIcon>
-              <span>O</span>
-              <span>W</span>
+          </div>
+
+          {/* 1ste rij iconen */}
+          <div className="row">
+            <div className="col">
+              <div className="iconContainer">
+                <div>
+                  <span className="icon">G</span>{" "}
+                  <span>
+                    {
+                      perceelAction.filter(
+                        (action) => action.type === "groente"
+                      ).length
+                    }
+                  </span>
+                </div>
+              </div>
+              <div>Groenten</div>
+            </div>
+            <div className="col">
+              <div className="iconContainer">
+                <span className="icon">A</span>{" "}
+                <span>
+                  {
+                    perceelAction.filter((action) => action.type === "action")
+                      .length
+                  }
+                </span>
+              </div>
+              <div>Acties</div>
+            </div>
+          </div>
+
+          {/* 2de rij iconen*/}
+          <div className="row">
+            <div className="col">
+              <div className="iconContainer">
+                <div>
+                  <span className="icon">O</span>{" "}
+                  <span>
+                    {
+                      perceelAction.filter(
+                        (action) => action.type === "groente"
+                      ).length
+                    }
+                  </span>
+                </div>
+              </div>
+              <div>Oogsten</div>
+            </div>
+            <div className="col">
+              <div className="iconContainer">
+                <span className="icon">W</span>{" "}
+                <span>
+                  {
+                    perceelAction.filter((action) => action.type === "action")
+                      .length
+                  }
+                </span>
+              </div>
+              <div>Water</div>
             </div>
           </div>
         </div>
