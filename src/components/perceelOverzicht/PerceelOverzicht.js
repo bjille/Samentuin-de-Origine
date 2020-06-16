@@ -51,34 +51,32 @@ class PerceelOverzicht extends Component {
     const { groenten } = this.props;
     const { percelen } = this.state;
     return (
-      <div className="col-md-5 border">
-        <div
-          className="container-fluid grondlayout p-2"
-          style={{ backgroundColor: `rgba(166, 111, 81, 0.1)` }}
-        >
-          {/* {this.drawGrondlayout()} */}
-          {percelen.map((perceel, index) => {
-            // console.log(perceel.naam);
-            let perceelAction = [];
-            groenten.map((groente) => {
-              if (groente.perceelNummer === perceel.naam) {
-                perceelAction.push(groente);
-              }
-              return groente;
-              // groente.perceelNummer === (index + 1).toString()
-              //   ? perceelAction.push(groente)
-              //   : "";
-            });
-            return (
-              <PerceelItem
-                key={index}
-                perceel={perceel}
-                perceelNummer={perceelAction.perceelNummer}
-                perceelAction={perceelAction}
-              ></PerceelItem>
-            );
-          })}
-        </div>
+      <div
+        className="container-fluid grondlayout p-2"
+        style={{ backgroundColor: `rgba(166, 111, 81, 0.1)` }}
+      >
+        {/* {this.drawGrondlayout()} */}
+        {percelen.map((perceel, index) => {
+          // console.log(perceel.naam);
+          let perceelAction = [];
+          groenten.map((groente) => {
+            if (groente.perceelNummer === perceel.naam) {
+              perceelAction.push(groente);
+            }
+            return groente;
+            // groente.perceelNummer === (index + 1).toString()
+            //   ? perceelAction.push(groente)
+            //   : "";
+          });
+          return (
+            <PerceelItem
+              key={index}
+              perceel={perceel}
+              perceelNummer={perceelAction.perceelNummer}
+              perceelAction={perceelAction}
+            ></PerceelItem>
+          );
+        })}
       </div>
     );
   }

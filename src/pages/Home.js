@@ -61,12 +61,25 @@ class Home extends Component {
     } else this.props.handleDelete(action);
   };
 
+  peceelInfoSorter = (a, b) => {
+    if (a.actionType === "action" && b.actionType === "groente") {
+      return -1;
+    }
+    if (a.actionType === "groente" && b.actionType === "action") {
+      return 1;
+    }
+    return 0;
+  };
+
   render() {
     const { selectedPerceel, groenten } = this.props;
     const { selectedAction, actionType, actionLevel } = this.state;
-    const perceelInfo = groenten.filter(
+    let perceelInfo = groenten.filter(
       (groente) => groente.perceelNummer === selectedPerceel
     );
+    // .sort(this.perceelInfoSorter);
+
+    perceelInfo.sort(this.perceelInfoSorter);
     // console.log(perceelInfo);
 
     return (
@@ -98,9 +111,11 @@ class Home extends Component {
         </div>
         <div className="container-fluid">
           <div className="row">
-            <PerceelOverzicht></PerceelOverzicht>
+            <div className="col-lg-5 border">
+              <PerceelOverzicht></PerceelOverzicht>
+            </div>
             {/* uitleg per perceel START*/}
-            <div id="perceelInfo" className="col-md-7 border">
+            <div id="perceelInfo" className="col-lg-7 border">
               <div
                 className="
               mt-2 mb-0"

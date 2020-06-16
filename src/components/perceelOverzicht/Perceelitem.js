@@ -35,35 +35,38 @@ class PerceelItem extends Component {
               <div className="col">{perceel.naam}</div>
             </div>
           </div>
+          <hr></hr>
 
           {/* 1ste rij iconen */}
-          <div className="row">
-            <div className="col">
-              <div className="iconContainer">
-                <div>
-                  <span className="icon">G</span>{" "}
-                  <span>
-                    {
-                      perceelAction.filter(
-                        (action) => action.type === "groente"
-                      ).length
-                    }
-                  </span>
+          <div className="row ">
+            <div className="d-flex justify-content-center">
+              <div className="col">
+                <div className="iconContainer">
+                  <div>
+                    <span className="icon icon-groente">G</span>{" "}
+                    <span>
+                      {
+                        perceelAction.filter(
+                          (action) => action.type === "groente"
+                        ).length
+                      }
+                    </span>
+                  </div>
+                  <div className="iconTitle">Groenten</div>
                 </div>
               </div>
-              <div>Groenten</div>
-            </div>
-            <div className="col">
-              <div className="iconContainer">
-                <span className="icon">A</span>{" "}
-                <span>
-                  {
-                    perceelAction.filter((action) => action.type === "action")
-                      .length
-                  }
-                </span>
+              <div className="col">
+                <div className="iconContainer">
+                  <span className="icon icon-acties">A</span>{" "}
+                  <span>
+                    {
+                      perceelAction.filter((action) => action.type === "action")
+                        .length
+                    }
+                  </span>
+                  <div className="iconTitle">Acties</div>
+                </div>
               </div>
-              <div>Acties</div>
             </div>
           </div>
 
@@ -72,7 +75,7 @@ class PerceelItem extends Component {
             <div className="col">
               <div className="iconContainer">
                 <div>
-                  <span className="icon">O</span>{" "}
+                  <span className="icon icon-oogsten">O</span>{" "}
                   <span>
                     {
                       perceelAction.filter(
@@ -81,24 +84,23 @@ class PerceelItem extends Component {
                     }
                   </span>
                 </div>
+                <div className="iconTitle">Oogsten</div>
               </div>
-              <div>Oogsten</div>
             </div>
             <div className="col">
               <div className="iconContainer">
-                <span className="icon">W</span>{" "}
+                <span className="icon icon-water">W</span>{" "}
                 <span>
                   {
-                    perceelAction.filter((action) => action.type === "action")
+                    perceelAction.filter((action) => action.boolWater === true)
                       .length
                   }
                 </span>
+                <div className="iconTitle">Water</div>
               </div>
-              <div>Water</div>
             </div>
           </div>
         </div>
-        <hr></hr>
         <div className="perceelBody">
           {/* {this.props.perceelAction.map((action, index) => {
             return (
