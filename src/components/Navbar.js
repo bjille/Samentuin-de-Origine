@@ -57,11 +57,13 @@ class NavBar extends Component {
                 <span className="navbar-brand mb-0 h1">Logout</span>
               </div>
             ) : (
-              <Link to="/login" className="nav-link">
-                <span>
-                  <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>{" "}
-                  <span className="">Login</span>
-                </span>
+              <Link to="/login">
+                <div className="logout d-flex flex-row align-items-center">
+                  <span className="nav-link">
+                    <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>{" "}
+                  </span>
+                  <span className="navbar-brand mb-0 h1">Login</span>
+                </div>
               </Link>
             )}
             <Link to="Info">

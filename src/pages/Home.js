@@ -119,41 +119,51 @@ class Home extends Component {
               <div
                 className="
               mt-2 mb-0"
-              >
+              ></div>
+              <div className="PerceelInfo">
+                <h2>
+                  {this.props.selectedPerceel
+                    ? `perceel ${this.props.selectedPerceel}`
+                    : "Algemeen Overzicht"}
+                </h2>
                 <div className="actieButtons">
-                  <ActieButtons
-                    toggleShowGroenteModal={(e, action, actionLevel) =>
-                      this.handleChangeAction(e, action, actionLevel, "add")
-                    }
-                    // toggleShowGroenteModal={() =>
-                    //   this.setState({
-                    //     showGroenteModal: true,
-                    //     actionType: "add"
-                    //   })
-                    // }
-                    toggleShowActionModal={(e, action, actionLevel) =>
-                      this.handleChangeAction(e, action, actionLevel, "add")
-                    }
-                  ></ActieButtons>
+                  {this.props.user ? (
+                    <ActieButtons
+                      toggleShowGroenteModal={(e, action, actionLevel) =>
+                        this.handleChangeAction(e, action, actionLevel, "add")
+                      }
+                      // toggleShowGroenteModal={() =>
+                      //   this.setState({
+                      //     showGroenteModal: true,
+                      //     actionType: "add"
+                      //   })
+                      // }
+                      toggleShowActionModal={(e, action, actionLevel) =>
+                        this.handleChangeAction(e, action, actionLevel, "add")
+                      }
+                    ></ActieButtons>
+                  ) : (
+                    ""
+                  )}
                 </div>
+                <Accordion
+                  defaultActiveKey={perceelInfo[0] && perceelInfo[0]._id}
+                >
+                  {perceelInfo.map((action, index) => (
+                    <PerceelInfo
+                      handleEdit={(e, action, actionLevel) =>
+                        this.handleChangeAction(e, action, actionLevel, "edit")
+                      }
+                      handleAdd={(e, action, actionLevel) =>
+                        this.handleChangeAction(e, action, actionLevel, "add")
+                      }
+                      handleDelete={(e, action) => this.handleDelete(e, action)}
+                      key={index}
+                      action={action}
+                    ></PerceelInfo>
+                  ))}
+                </Accordion>
               </div>
-              <Accordion
-                defaultActiveKey={perceelInfo[0] && perceelInfo[0]._id}
-              >
-                {perceelInfo.map((action, index) => (
-                  <PerceelInfo
-                    handleEdit={(e, action, actionLevel) =>
-                      this.handleChangeAction(e, action, actionLevel, "edit")
-                    }
-                    handleAdd={(e, action, actionLevel) =>
-                      this.handleChangeAction(e, action, actionLevel, "add")
-                    }
-                    handleDelete={(e, action) => this.handleDelete(e, action)}
-                    key={index}
-                    action={action}
-                  ></PerceelInfo>
-                ))}
-              </Accordion>
               {/* uitleg over geselecteerd perceel */}
             </div>
             {/* uitleg per perceel END*/}
@@ -167,6 +177,7 @@ const mapStateToProps = (state) => {
   return {
     selectedPerceel: state.perceelinfo.selectedPerceel,
     groenten: state.perceelinfo.groenten,
+    user: state.auth.user,
   };
 };
 const mapDispatchToProps = (dispatch) => {
