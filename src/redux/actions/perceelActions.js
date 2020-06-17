@@ -11,7 +11,7 @@ const backendURI = require("../../config/keys").BACKEND_URI;
 // };
 
 const reformat = (data) => {
-  console.log(data);
+  // console.log(data);
   // acties uitfilteren die een linkedId hebben
   let childActions = data.filter((action) => {
     return action.linkedId ? action : "";
@@ -66,11 +66,11 @@ export const delete_action_overview = (action) => async (dispatch) => {
 };
 
 export const add_Action_Overview = (action) => async (dispatch) => {
-  console.log(action);
+  // console.log(action);
   const res = await axios
     .post(`${backendURI}/api/acties`, action)
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       action._id = res.data._id;
       action.childActions = [];
       dispatch({ type: "ADD_ACTION_OVERVIEW", payload: action });
@@ -81,7 +81,7 @@ export const edit_Action_Overview = (action) => async (dispatch) => {
   const res = await axios
     .post(`${backendURI}/api/acties`, action)
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       dispatch({ type: "EDIT_ACTION_OVERVIEW", payload: action });
     });
 };
