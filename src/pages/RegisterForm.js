@@ -20,13 +20,30 @@ export default class RegisterForm extends Component {
     }).then(
       (res) => {
         alert("registratie gelukt");
-        // this.setState({ redirect: true });
+        this.setState({ redirect: true });
       },
       (error) => {
         let errors = error.response.data;
         this.setState({ errors, redirect: false });
       }
     );
+  };
+
+  validate = (values) => {
+    const errors = {};
+    if (!values.first_name) {
+      errors.first_name = "verplicht veld";
+    }
+    if (!values.last_name) {
+      errors.last_name = "verplicht veld";
+    }
+    if (!values.email) {
+      errors.email = "verplicht veld";
+    }
+    if (!values.password) {
+      errors.password = "verplicht veld";
+    }
+    return errors;
   };
 
   // Formik
@@ -67,6 +84,11 @@ export default class RegisterForm extends Component {
                   {this.state.errors.first_name &&
                     this.state.errors.errors.first_name}
                 </div>
+                <ErrorMessage
+                  style={this.errorStyle}
+                  className="error"
+                  name="first_name"
+                ></ErrorMessage>
               </div>
               <div className="col">
                 <Field
@@ -78,6 +100,11 @@ export default class RegisterForm extends Component {
                 <div style={this.errorStyle} className="error">
                   {this.state.errors.last_name && this.state.errors.last_name}
                 </div>
+                <ErrorMessage
+                  style={this.errorStyle}
+                  className="error"
+                  name="last_name"
+                ></ErrorMessage>
               </div>
             </div>
             <div className="form-row mb-4">
@@ -90,6 +117,11 @@ export default class RegisterForm extends Component {
               <div style={this.errorStyle} className="error">
                 {this.state.errors.email && this.state.errors.email}
               </div>
+              <ErrorMessage
+                style={this.errorStyle}
+                className="error"
+                name="email"
+              ></ErrorMessage>
             </div>
             <div className="form-row">
               <Field
@@ -102,6 +134,11 @@ export default class RegisterForm extends Component {
             <div style={this.errorStyle} className="error">
               {this.state.errors.password && this.state.errors.password}
             </div>
+            <ErrorMessage
+              style={this.errorStyle}
+              className="error"
+              name="password"
+            ></ErrorMessage>
 
             {/* <label htmlFor="avatar">Url Avatar: </label>
             <Field className="form-control" type="text" name="avatar"></Field> */}
