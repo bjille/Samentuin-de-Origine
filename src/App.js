@@ -19,45 +19,10 @@ import RegisterForm from "./pages/RegisterForm";
 class App extends Component {
   componentDidMount() {
     this.props.getPerceelinfo();
-    let kalenderData = this.formatData();
-    // console.log("componentDidMount " + kalenderData);
-    // this.setState({ kalenderData });
-    this.props.setKalenderData(kalenderData);
     if (TOKEN) {
       this.props.setUserData();
     }
   }
-
-  formatData = () => {
-    let kalenderData = [];
-    let perceelInfo = this.props.groenten.map((groente) => {
-      let color;
-      groente.naam === "aardappel" ? (color = "red") : (color = "green");
-      return {
-        title: groente.naam,
-        start: this.formatDate(groente.actieDatum),
-        color: color,
-        // end: this.formatDate(groente.oogsten)
-      };
-    });
-    let zaaikalenderData = this.props.zaaikalender.map((kalenderItem) => {
-      return {
-        title: kalenderItem.naam + " (" + kalenderItem.type + ") " + "zaaien",
-        start: moment()
-          .day("Monday")
-          .week(kalenderItem.zaaien_van)
-          .format("YYYY-MM-DD"),
-        end: moment()
-          .day("Sunday")
-          .week(kalenderItem.zaaien_tot)
-          .format("YYYY-MM-DD"),
-        color: "lightgrey",
-        textColor: "black",
-      };
-    });
-    kalenderData = [...perceelInfo, ...zaaikalenderData];
-    return kalenderData;
-  };
 
   render() {
     return (

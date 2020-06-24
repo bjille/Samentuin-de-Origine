@@ -9,6 +9,8 @@ import bootstrapPlugin from "@fullcalendar/bootstrap";
 import { connect } from "react-redux";
 import moment from "moment";
 import { setkalenderData } from "../../redux/actions/kalenderActions";
+import { formatData } from "../../helpers/appHelpers";
+import { onlyUnique } from "../../helpers/helpers";
 
 class MoestuinKalender extends Component {
   constructor(props) {
@@ -20,7 +22,10 @@ class MoestuinKalender extends Component {
   calendarRef = React.createRef();
 
   componentDidMount() {
-    let kalenderData = this.formatData();
+    let kalenderData = this.formatData(
+      this.props.groenten,
+      this.props.zaaikalender
+    );
     // console.log("componentDidMount " + kalenderData);
     // this.setState({ kalenderData });
     this.props.setKalenderData(kalenderData);
@@ -39,12 +44,12 @@ class MoestuinKalender extends Component {
     }
   }
 
-  formatDate = date => {
+  formatDate = (date) => {
     const newDate = moment(date, "DD-MM-YYYY");
     return newDate.format("YYYY-MM-DD");
   };
 
-  getcolor = type => {
+  getcolor = (type) => {
     if (type === "manualAction") {
       return "blue";
     }
@@ -53,10 +58,11 @@ class MoestuinKalender extends Component {
     }
   };
 
-  formatData = () => {
+  formatData = (groenten, zaaikalender) => {
     let kalenderData = [];
+    let categorieArray = [];
 
-    let perceelInfo = this.props.groenten.map(groente => {
+    let perceelInfo = groenten.map((groente) => {
       let color;
       groente.naam === "aardappel" ? (color = "red") : (color = "green");
       return {
@@ -66,13 +72,17 @@ class MoestuinKalender extends Component {
         color: this.getcolor(groente.type),
         // end: this.formatDate(groente.oogsten)
         source: "perceelinfo",
-        groupId: 0
+        groupId: 0,
       };
     });
 
-    let zaaikalenderData = this.props.zaaikalender.map(kalenderItem => {
+    let zaaikalenderData = zaaikalender.map((kalenderItem) => {
+      if (!categorieArray.includes(kalenderItem.Categorie)) {
+        categorieArray.push(kalenderItem.Categorie);
+      }
       return {
         title: kalenderItem.naam + " (" + kalenderItem.type + ") " + "zaaien",
+        categorie: kalenderItem.Categorie,
         start: moment()
           .day("Monday")
           .week(kalenderItem.zaaien_van)
@@ -84,25 +94,26 @@ class MoestuinKalender extends Component {
         color: "lightgrey",
         textColor: "black",
         source: "zaaikalender",
-        groupId: 1
+        groupId: 1,
       };
     });
+    this.setState({ categorieArray });
     kalenderData = [
       ...perceelInfo,
       ...zaaikalenderData,
-      { title: "testdata", start: "2020-02-07", groupId: 2 }
+      { title: "testdata", start: "2020-02-07", groupId: 2 },
     ];
     return kalenderData;
   };
 
-  changeView = view => {
+  changeView = (view) => {
     let calendarAPI = this.calendarRef.current.getApi();
     // this.setState({ calendarView: "dayGridMonth" });
     calendarAPI.changeView(view);
     // calenderAPI.next();
   };
 
-  clicked = info => {
+  clicked = (info) => {
     console.log(info.event);
     console.log("Event: " + info.event.title);
   };
@@ -112,17 +123,17 @@ class MoestuinKalender extends Component {
     const value = e.target.checked;
     if (value === true) {
       let filteredKalenderData = this.props.kalenderData.filter(
-        data => data.groupId === groupId
+        (data) => data.groupId === groupId
       );
       const kalenderData = [
         ...this.state.kalenderData,
-        ...filteredKalenderData
+        ...filteredKalenderData,
       ];
       this.setState({ kalenderData });
     }
     if (value === false) {
       let filteredKalenderData = this.state.kalenderData.filter(
-        data => data.groupId !== groupId
+        (data) => data.groupId !== groupId
       );
       const kalenderData = filteredKalenderData;
       this.setState({ kalenderData });
@@ -133,7 +144,6 @@ class MoestuinKalender extends Component {
     // const kalenderData = [];
     const kalenderData = this.state.kalenderData;
     console.log(kalenderData);
-
     return (
       <div>
         <div className="row">
@@ -168,7 +178,7 @@ class MoestuinKalender extends Component {
                       className="custom-control-input"
                       id="swtzaaikalender"
                       defaultChecked
-                      onChange={e => this.changeData(e, 1)}
+                      onChange={(e) => this.changeData(e, 1)}
                     />
                     <label
                       className="custom-control-label"
@@ -185,7 +195,7 @@ class MoestuinKalender extends Component {
                       className="custom-control-input"
                       id="swtmoestuinplanning"
                       defaultChecked
-                      onChange={e => this.changeData(e, 0)}
+                      onChange={(e) => this.changeData(e, 0)}
                     />
                     <label
                       className="custom-control-label"
@@ -202,7 +212,7 @@ class MoestuinKalender extends Component {
                       className="custom-control-input"
                       id="swttestdata"
                       defaultChecked
-                      onChange={e => this.changeData(e, 2)}
+                      onChange={(e) => this.changeData(e, 2)}
                     />
                     <label
                       className="custom-control-label"
@@ -241,16 +251,16 @@ class MoestuinKalender extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     groenten: state.perceelinfo.groenten,
     zaaikalender: state.zaaikalender,
-    kalenderData: state.kalender
+    kalenderData: state.kalender,
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  setKalenderData: data => dispatch(setkalenderData(data))
+const mapDispatchToProps = (dispatch) => ({
+  setKalenderData: (data) => dispatch(setkalenderData(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoestuinKalender);

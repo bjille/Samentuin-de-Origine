@@ -41,7 +41,7 @@ class WaterSlider extends Component {
             onChange={this.handleEdit}
           />
           <label className="custom-control-label" htmlFor={action._id}>
-            Water geven
+            {this.props.type}
           </label>
         </div>
       </div>
@@ -49,9 +49,9 @@ class WaterSlider extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    editAction_overview: action => dispatch(edit_Action_Overview(action))
+    editAction_overview: (action) => dispatch(edit_Action_Overview(action)),
   };
 };
 

@@ -19,6 +19,10 @@
 .form-group {
   margin: 0;
 }
+
+.headerNoUser {
+  padding: 10px 10px 10px 0;
+}
 .perceelInfoButtons > * {
   display: inline-block;
   padding: 10px 10px 10px 0;

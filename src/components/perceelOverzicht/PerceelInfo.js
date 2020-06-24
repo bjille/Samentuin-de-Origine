@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import PerceelChildInfo from "./PerceelChildInfo";
 import WaterSlider from "./WaterSlider";
+import { connect } from "react-redux";
 
 class PerceelInfo extends Component {
   handleAdd = (e, action, actionLevel) => {
@@ -78,11 +79,15 @@ class PerceelInfo extends Component {
             {/* <a as={Button} viariant="link" eventkey={action._id}>
               {action.naam}
             </a> */}
-            <div className="perceelInfoButtons">
-              {action.type === "groente" ? (
-                <WaterSlider action={action}></WaterSlider>
-              ) : undefined}
-              {/* <div className="form-group">
+            {this.props.user ? (
+              <div className="perceelInfoButtons">
+                {action.type === "groente" ? (
+                  <WaterSlider action={action} type="water"></WaterSlider>
+                ) : undefined}
+                {/* {action.type === "groente" ? (
+                  <WaterSlider action={action} type="oogsten"></WaterSlider>
+                ) : undefined} */}
+                {/* <div className="form-group">
                 <div className="custom-control custom-switch">
                   
                   <WaterSlider action={action}></WaterSlider>
@@ -92,31 +97,46 @@ class PerceelInfo extends Component {
                 </div>
               </div> */}
 
-              <a
-                id={action._id}
-                onClick={(e) => this.handleAdd(e, action, 1)}
-                href="#"
-                title="actie toevoegen aan groente"
-              >
-                <FontAwesomeIcon icon={faPlus} />
-              </a>
-              <a
-                id={action._id}
-                onClick={(e) => this.props.handleEdit(e, action, 0)}
-                href="#"
-                title="Info aanpassen"
-              >
-                <FontAwesomeIcon icon={faEdit} />
-              </a>
-              <a
-                id={action._id}
-                onClick={(e) => this.props.handleDelete(e, action)}
-                href="#"
-                title="Groente verwijderen"
-              >
-                <FontAwesomeIcon icon={faTrash} />
-              </a>
-            </div>
+                <a
+                  id={action._id}
+                  onClick={(e) => this.handleAdd(e, action, 1)}
+                  href="#"
+                  title="actie toevoegen aan groente"
+                >
+                  <FontAwesomeIcon icon={faPlus} />
+                </a>
+                <a
+                  id={action._id}
+                  onClick={(e) => this.props.handleEdit(e, action, 0)}
+                  href="#"
+                  title="Info aanpassen"
+                >
+                  <FontAwesomeIcon icon={faEdit} />
+                </a>
+                <a
+                  id={action._id}
+                  onClick={(e) => this.props.handleDelete(e, action)}
+                  href="#"
+                  title="Groente verwijderen"
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </a>
+              </div>
+            ) : (
+              ""
+            )}
+            {!this.props.user &&
+            action.type === "groente" &&
+            action.boolWater === true ? (
+              <div className="headerNoUser">
+                <FontAwesomeIcon
+                  className="fa-blink"
+                  icon={faShower}
+                ></FontAwesomeIcon>
+              </div>
+            ) : (
+              ""
+            )}
           </Accordion.Toggle>
           <Accordion.Collapse eventKey={action._id}>
             <Card.Body className="actionInfo card bg-light border">
@@ -149,4 +169,10 @@ class PerceelInfo extends Component {
   }
 }
 
-export default PerceelInfo;
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+
+export default connect(mapStateToProps)(PerceelInfo);
