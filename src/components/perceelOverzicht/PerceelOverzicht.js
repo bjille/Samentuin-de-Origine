@@ -48,6 +48,12 @@ class PerceelOverzicht extends Component {
     // this.setState({ perceelInfo });
   };
   render() {
+    var visibility = "hide";
+
+    if (this.props.menuVisibility) {
+      visibility = "show";
+    }
+
     const { groenten } = this.props;
     const { percelen } = this.state;
     return (
@@ -55,6 +61,13 @@ class PerceelOverzicht extends Component {
         className="container-fluid grondlayout p-2"
         style={{ backgroundColor: `rgba(166, 111, 81, 0.1)` }}
       >
+        {/* //</div
+         id="slideMenu"
+        onClick={this.props.handleMouseDown}
+         onMouseDown={this.props.handleMouseDown}
+         className={visibility}
+         style={{ backgroundColor: `rgba(166, 111, 81, 0.1)` }}
+       > */}
         {/* {this.drawGrondlayout()} */}
         {percelen.map((perceel, index) => {
           // console.log(perceel.naam);
@@ -77,6 +90,7 @@ class PerceelOverzicht extends Component {
             ></PerceelItem>
           );
         })}
+        {/* </div> */}
       </div>
     );
   }

@@ -12,6 +12,8 @@ h1::before {
   color: pink;
   width: 300;
 }
+
+/* Blink icoontjes */
 @keyframes fa-blink {
   0% {
     opacity: 1;

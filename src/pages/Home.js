@@ -13,14 +13,29 @@ import ActieButtons from "../components/perceelOverzicht/ActieButtons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import RenderModal from "../components/modals/RenderModal";
 
+import "./Home.css";
+
 class Home extends Component {
-  state = {};
+  state = { visible: false };
 
   componentDidUpdate = () => {
     // console.log(this.props.match.params.activePerceel);
     if (this.props.match.params.activePerceel === "0") {
       this.props.resetActivePerceel();
     }
+  };
+
+  toggleMenu = () => {
+    this.setState({
+      visible: !this.state.visible,
+    });
+  };
+
+  handleMouseDown = (e) => {
+    this.toggleMenu();
+
+    console.log("clicked");
+    e.stopPropagation();
   };
 
   handleChangeAction = (e, action, actionLevel, actionType) => {
@@ -111,11 +126,26 @@ class Home extends Component {
         </div>
         <div className="container-fluid">
           <div className="row">
+            {/* PerceelOverzicht start */}
             <div className="col-lg-5 border">
-              <PerceelOverzicht></PerceelOverzicht>
+              <PerceelOverzicht
+                handleMoudeDown={this.handleMouseDown}
+                menuVisibility={this.state.visible}
+              ></PerceelOverzicht>
             </div>
-            {/* uitleg per perceel START*/}
-            <div id="perceelInfo" className="col-lg-7 border">
+
+            {/* Perceeloverzicht Einde  */}
+
+            {/* Perceeldetail START*/}
+            <div
+              id="perceelInfo"
+              className="col-lg-7 border"
+              style={{ zIndex: 1 }}
+            >
+              {/* <button
+                id="roundButton"
+                onMouseDown={this.handleMouseDown}
+              ></button> */}
               <div
                 className="
               mt-2 mb-0"
@@ -166,7 +196,7 @@ class Home extends Component {
               </div>
               {/* uitleg over geselecteerd perceel */}
             </div>
-            {/* uitleg per perceel END*/}
+            {/* Perceeldetail EINDE*/}
           </div>
         </div>
       </div>
