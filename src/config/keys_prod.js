@@ -1,4 +1,4 @@
 module.exports = {
-  BACKEND_URI: "https://dapper-druid-b2ac3a.netlify.app",
+  BACKEND_URI: "https://samentuin-backend-vives.herokuapp.com/",
   secretOrKey: process.env.SECRET_OR_KEY,
 };
