@@ -6,7 +6,7 @@ Via this app, they get an overview of what crops are planted on which location.
 
 The users can add vegetables or tasks themself after they created a login.
 
-Front-end was built with react and redux and deployed to netlify, [back end](https://github.com/bjille/samentuin-backend) was built with node.js and deployed to heroku. data is stored in mongodb atlas.
+Front-end was built with react and redux and deployed to netlify, [back end](https://github.com/bjille/samentuin-backend) was built with node.js and deployed to [Render](https://samentuin-backend.onrender.com/). data is stored in mongodb atlas.
 
 ## Working Version:
 
