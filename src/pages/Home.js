@@ -16,7 +16,9 @@ import RenderModal from "../components/modals/RenderModal";
 import "./Home.css";
 
 class Home extends Component {
-  state = { visible: false };
+  state = {
+    visible: false,
+  };
 
   componentDidUpdate = () => {
     // console.log(this.props.match.params.activePerceel);
@@ -99,7 +101,8 @@ class Home extends Component {
 
     return (
       <div>
-        <TodoList></TodoList>
+        {" "}
+        {/*<TodoList></TodoList>*/}{" "}
         <div id="Modal">
           <RenderModal
             actionType={actionType}
@@ -122,41 +125,44 @@ class Home extends Component {
                 actionType: undefined,
               })
             }
-          ></RenderModal>
-        </div>
+          ></RenderModal>{" "}
+        </div>{" "}
         <div className="container-fluid">
           <div className="row">
-            {/* PerceelOverzicht start */}
+            {" "}
+            {/* PerceelOverzicht start */}{" "}
             <div className="col-lg-5 border">
               <PerceelOverzicht
                 handleMoudeDown={this.handleMouseDown}
                 menuVisibility={this.state.visible}
-              ></PerceelOverzicht>
+              ></PerceelOverzicht>{" "}
             </div>
-
             {/* Perceeloverzicht Einde  */}
-
-            {/* Perceeldetail START*/}
+            {/* Perceeldetail START*/}{" "}
             <div
               id="perceelInfo"
               className="col-lg-7 border"
-              style={{ zIndex: 1 }}
+              style={{
+                zIndex: 1,
+              }}
             >
               {/* <button
-                id="roundButton"
-                onMouseDown={this.handleMouseDown}
-              ></button> */}
+                        id="roundButton"
+                        onMouseDown={this.handleMouseDown}
+                      ></button> */}{" "}
               <div
                 className="
-              mt-2 mb-0"
-              ></div>
+      mt - 2 mb - 0 "
+              ></div>{" "}
               <div className="PerceelInfo">
                 <h2>
+                  {" "}
                   {this.props.selectedPerceel
                     ? `perceel ${this.props.selectedPerceel}`
-                    : "Algemeen Overzicht"}
-                </h2>
+                    : "Algemeen Overzicht"}{" "}
+                </h2>{" "}
                 <div className="actieButtons">
+                  {" "}
                   {this.props.user ? (
                     <ActieButtons
                       toggleShowGroenteModal={(e, action, actionLevel) =>
@@ -174,8 +180,8 @@ class Home extends Component {
                     ></ActieButtons>
                   ) : (
                     ""
-                  )}
-                </div>
+                  )}{" "}
+                </div>{" "}
                 <Accordion
                   defaultActiveKey={perceelInfo[0] && perceelInfo[0]._id}
                 >
@@ -191,14 +197,14 @@ class Home extends Component {
                       key={index}
                       action={action}
                     ></PerceelInfo>
-                  ))}
-                </Accordion>
-              </div>
-              {/* uitleg over geselecteerd perceel */}
-            </div>
-            {/* Perceeldetail EINDE*/}
-          </div>
-        </div>
+                  ))}{" "}
+                </Accordion>{" "}
+              </div>{" "}
+              {/* uitleg over geselecteerd perceel */}{" "}
+            </div>{" "}
+            {/* Perceeldetail EINDE*/}{" "}
+          </div>{" "}
+        </div>{" "}
       </div>
     );
   }

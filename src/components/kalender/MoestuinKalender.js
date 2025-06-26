@@ -17,7 +17,9 @@ class MoestuinKalender extends Component {
     super(props);
     // this.state = { kalenderData: this.props.kalenderData };
   }
-  state = { kalenderData: [] };
+  state = {
+    kalenderData: [],
+  };
 
   calendarRef = React.createRef();
 
@@ -29,7 +31,9 @@ class MoestuinKalender extends Component {
     // console.log("componentDidMount " + kalenderData);
     // this.setState({ kalenderData });
     this.props.setKalenderData(kalenderData);
-    this.setState({ kalenderData });
+    this.setState({
+      kalenderData,
+    });
     let calendarAPI = this.calendarRef.current.getApi();
     calendarAPI.setOption("height", "auto");
     // calendarAPI.setOption("aspectRatio", 2);
@@ -97,11 +101,17 @@ class MoestuinKalender extends Component {
         groupId: 1,
       };
     });
-    this.setState({ categorieArray });
+    this.setState({
+      categorieArray,
+    });
     kalenderData = [
       ...perceelInfo,
       ...zaaikalenderData,
-      { title: "testdata", start: "2020-02-07", groupId: 2 },
+      {
+        title: "testdata",
+        start: "2020-02-07",
+        groupId: 2,
+      },
     ];
     return kalenderData;
   };
@@ -129,14 +139,18 @@ class MoestuinKalender extends Component {
         ...this.state.kalenderData,
         ...filteredKalenderData,
       ];
-      this.setState({ kalenderData });
+      this.setState({
+        kalenderData,
+      });
     }
     if (value === false) {
       let filteredKalenderData = this.state.kalenderData.filter(
         (data) => data.groupId !== groupId
       );
       const kalenderData = filteredKalenderData;
-      this.setState({ kalenderData });
+      this.setState({
+        kalenderData,
+      });
     }
   };
 
@@ -150,25 +164,27 @@ class MoestuinKalender extends Component {
           <div className="fullcalendarContainer">
             <div
               className="calenderControls col col-md-3 col-12"
-              style={{ margin: 20 }}
+              style={{
+                margin: 20,
+              }}
             >
               <button
                 className="btn btn-primary btn-block"
                 onClick={() => this.changeView("dayGridWeek")}
               >
-                Weekoverzicht
-              </button>
+                Weekoverzicht{" "}
+              </button>{" "}
               <button
                 className="btn btn-primary btn-block"
                 onClick={() => this.changeView("dayGridMonth")}
               >
-                Maandoverzicht
-              </button>
+                Maandoverzicht{" "}
+              </button>{" "}
               <button
                 className="btn btn-primary btn-block"
                 onClick={() => this.changeView("listWeek")}
               >
-                Lijst
+                Lijst{" "}
               </button>{" "}
               <div className="viewButtons">
                 <div className="form-group">
@@ -179,14 +195,14 @@ class MoestuinKalender extends Component {
                       id="swtzaaikalender"
                       defaultChecked
                       onChange={(e) => this.changeData(e, 1)}
-                    />
+                    />{" "}
                     <label
                       className="custom-control-label"
                       htmlFor="swtzaaikalender"
                     >
-                      Zaaikalender Velt
-                    </label>
-                  </div>
+                      Zaaikalender Velt{" "}
+                    </label>{" "}
+                  </div>{" "}
                 </div>{" "}
                 <div className="form-group">
                   <div className="custom-control custom-switch">
@@ -196,15 +212,15 @@ class MoestuinKalender extends Component {
                       id="swtmoestuinplanning"
                       defaultChecked
                       onChange={(e) => this.changeData(e, 0)}
-                    />
+                    />{" "}
                     <label
                       className="custom-control-label"
                       htmlFor="swtmoestuinplanning"
                     >
-                      Moestuinplanning
-                    </label>
-                  </div>
-                </div>
+                      Moestuinplanning{" "}
+                    </label>{" "}
+                  </div>{" "}
+                </div>{" "}
                 <div className="form-group">
                   <div className="custom-control custom-switch">
                     <input
@@ -213,17 +229,17 @@ class MoestuinKalender extends Component {
                       id="swttestdata"
                       defaultChecked
                       onChange={(e) => this.changeData(e, 2)}
-                    />
+                    />{" "}
                     <label
                       className="custom-control-label"
                       htmlFor="swttestdata"
                     >
-                      Testdata
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
+                      Testdata{" "}
+                    </label>{" "}
+                  </div>{" "}
+                </div>{" "}
+              </div>{" "}
+            </div>{" "}
             <div
               // style={{ maxWidth: 800, width: "100%", height: "auto" }}
               className="calendarContainer col-md-auto"
@@ -242,10 +258,10 @@ class MoestuinKalender extends Component {
                 events={kalenderData}
                 eventClick={this.clicked}
                 eventTextColor="white"
-              ></FullCalendar>
-            </div>
-          </div>
-        </div>
+              ></FullCalendar>{" "}
+            </div>{" "}
+          </div>{" "}
+        </div>{" "}
       </div>
     );
   }
@@ -254,7 +270,7 @@ class MoestuinKalender extends Component {
 const mapStateToProps = (state) => {
   return {
     groenten: state.perceelinfo.groenten,
-    zaaikalender: state.zaaikalender,
+    zaaikalender: [], //state.zaaikalender,
     kalenderData: state.kalender,
   };
 };
